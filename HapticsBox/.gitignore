@@ -1,0 +1,6 @@
+.DS_Store
+UserInterfaceState.xcuserstate
+
+Carthage/Checkouts
+!Carthage/Build
+
