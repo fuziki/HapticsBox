@@ -19,6 +19,7 @@
 		52101518238974A400858FFE /* Event.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 52101517238974A400858FFE /* Event.ahap */; };
 		5210151C23897DCA00858FFE /* Full.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210151B23897DCA00858FFE /* Full.ahap */; };
 		5210151F23897E3000858FFE /* Heartbeats.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210151E23897E3000858FFE /* Heartbeats.ahap */; };
+		52101522238984B300858FFE /* CodableHapticPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101521238984B300858FFE /* CodableHapticPattern.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		52101517238974A400858FFE /* Event.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Event.ahap; sourceTree = "<group>"; };
 		5210151B23897DCA00858FFE /* Full.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Full.ahap; sourceTree = "<group>"; };
 		5210151E23897E3000858FFE /* Heartbeats.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Heartbeats.ahap; sourceTree = "<group>"; };
+		52101521238984B300858FFE /* CodableHapticPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableHapticPattern.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 				521014F92389434A00858FFE /* Assets.xcassets */,
 				521014FB2389434A00858FFE /* LaunchScreen.storyboard */,
 				521014FE2389434A00858FFE /* Info.plist */,
+				521015202389834600858FFE /* CodableHapticPattern */,
 			);
 			path = HapticsBox;
 			sourceTree = "<group>";
@@ -128,6 +131,14 @@
 				5210151E23897E3000858FFE /* Heartbeats.ahap */,
 			);
 			path = ahap;
+			sourceTree = "<group>";
+		};
+		521015202389834600858FFE /* CodableHapticPattern */ = {
+			isa = PBXGroup;
+			children = (
+				52101521238984B300858FFE /* CodableHapticPattern.swift */,
+			);
+			path = CodableHapticPattern;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,6 +248,7 @@
 			files = (
 				521014F52389434700858FFE /* ViewController.swift in Sources */,
 				521014F12389434700858FFE /* AppDelegate.swift in Sources */,
+				52101522238984B300858FFE /* CodableHapticPattern.swift in Sources */,
 				521014F32389434700858FFE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
