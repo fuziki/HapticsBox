@@ -8,21 +8,11 @@
 
 import CoreHaptics
 
-//Apple Haptic and Audio Pattern (AHAP) file format loader
-public class AHAPLoader {
-    public func loadHapticPatternFromFile(name: String, extension ext: String) -> CHHapticPattern? {
-        let testBundle = Bundle(for: type(of: self))
-        guard let url = testBundle.url(forResource: name, withExtension: ext),
-            let data = try? Data(contentsOf: url),
-            let str = String(data: data, encoding: .utf8) else {
-                return nil
-        }
-        return self.createHapticPattern(withString: str)
-    }
-
-    public func createHapticPattern(withString: String) -> CHHapticPattern? {
+//Apple Haptic and Audio Pattern (AHAP) file parser
+public class AHAPParser {
+    public static func parse(ahapString: String) -> CHHapticPattern? {
         do {
-            guard let data = withString.data(using: .utf8) else { return nil }
+            guard let data = ahapString.data(using: .utf8) else { return nil }
             let hapticPattern = try JSONDecoder().decode( CodableHapticPattern.self, from: data)
             return hapticPattern
         } catch let error {
