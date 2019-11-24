@@ -14,7 +14,7 @@ public class FileLoader {
         guard let url = testBundle.url(forResource: fileName, withExtension: ext),
             let data = try? Data(contentsOf: url),
             let str = String(data: data, encoding: .utf8) else {
-                print("failed load string file, file name: \(fileName), ext: \(ext)")
+                HBLogger.assert("failed load string file, file name: \(fileName), ext: \(ext)")
                 return nil
         }
         return str

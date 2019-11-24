@@ -21,6 +21,7 @@
 		5210151F23897E3000858FFE /* OnceHeartbeat.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210151E23897E3000858FFE /* OnceHeartbeat.ahap */; };
 		52101522238984B300858FFE /* HapticPatternLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101521238984B300858FFE /* HapticPatternLoader.swift */; };
 		52101524238A734500858FFE /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101523238A734500858FFE /* FileLoader.swift */; };
+		52101526238AC1D700858FFE /* HapticsBoxLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101525238AC1D700858FFE /* HapticsBoxLogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		5210151E23897E3000858FFE /* OnceHeartbeat.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OnceHeartbeat.ahap; sourceTree = "<group>"; };
 		52101521238984B300858FFE /* HapticPatternLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPatternLoader.swift; sourceTree = "<group>"; };
 		52101523238A734500858FFE /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
+		52101525238AC1D700858FFE /* HapticsBoxLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsBoxLogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 		521015202389834600858FFE /* CHUtils */ = {
 			isa = PBXGroup;
 			children = (
+				52101525238AC1D700858FFE /* HapticsBoxLogger.swift */,
 				52101521238984B300858FFE /* HapticPatternLoader.swift */,
 				52101523238A734500858FFE /* FileLoader.swift */,
 			);
@@ -249,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52101526238AC1D700858FFE /* HapticsBoxLogger.swift in Sources */,
 				521014F52389434700858FFE /* ViewController.swift in Sources */,
 				521014F12389434700858FFE /* AppDelegate.swift in Sources */,
 				52101522238984B300858FFE /* HapticPatternLoader.swift in Sources */,
