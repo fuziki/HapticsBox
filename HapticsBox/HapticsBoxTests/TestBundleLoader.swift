@@ -9,9 +9,19 @@
 import Foundation
 
 class TestBundleLoader {
-    func load(name: String, extension ext: String) -> String {
-        let testBundle = Bundle(for: type(of: self))
-        let url = testBundle.url(forResource: name, withExtension: ext)!
+    public enum BundlePosition {
+        case main
+        case `self`
+    }
+    func load(bundle bundlePosition: BundlePosition, name: String, extension ext: String) -> String {
+        let bundle: Bundle
+        switch bundlePosition {
+        case .main:
+            bundle = Bundle.main
+        case .`self`:
+            bundle = Bundle(for: type(of: self))
+        }
+        let url = bundle.url(forResource: name, withExtension: ext)!
         let data = try! Data(contentsOf: url)
         let str = String(data: data, encoding: .utf8)!
         return str

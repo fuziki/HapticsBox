@@ -24,23 +24,17 @@ class HapticsBoxTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
-        let str = TestBundleLoader().load(name: "EventParameter", extension: "ahap")
-        let ptrn = try! JSONDecoder().decode( [String: [CodableCHHapticEventParameter]].self, from: str.data(using: .utf8)!)
-        print("str: \n\(ptrn["EventParameters"]!)")
-
-        let eventStr = TestBundleLoader().load(name: "Event", extension: "ahap")
-        let event = try! JSONDecoder().decode( [String: CodableCHHapticEvent].self, from: eventStr.data(using: .utf8)!)
-        print("str: \n\(event["Event"]!)")
-
-        let hbStr = TestBundleLoader().load(name: "Full", extension: "ahap")
-        do {
-            let hb = try JSONDecoder().decode( CodableCHHapticPattern.self, from: hbStr.data(using: .utf8)!)
-            print("str: \n\(hb)")
-        } catch let error {
-            print("error: \(error)")
+        let ahaps: [(bundle: TestBundleLoader.BundlePosition, name: String, ext: String)] =
+            [(bundle: .`self`, name: "Full", ext: "ahap"),
+             (bundle: .main, name: "Boing", ext: "ahap")]
+        
+        for ahap in ahaps {
+            print("test: \(ahap)")
+            let str = TestBundleLoader().load(bundle: ahap.bundle, name: ahap.name, extension: ahap.ext)
+            let success = AHAPParser.test(ahapString: str)
+            XCTAssertEqual(success, true)
         }
-
-        XCTAssertEqual("", "")
+        
     }
 
     func testPerformanceExample() {

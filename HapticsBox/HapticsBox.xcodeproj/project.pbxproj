@@ -22,6 +22,13 @@
 		52101522238984B300858FFE /* HapticPatternLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101521238984B300858FFE /* HapticPatternLoader.swift */; };
 		52101524238A734500858FFE /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101523238A734500858FFE /* FileLoader.swift */; };
 		52101526238AC1D700858FFE /* HapticsBoxLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101525238AC1D700858FFE /* HapticsBoxLogger.swift */; };
+		52101528238ACB3400858FFE /* HapticsBoxEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101527238ACB3400858FFE /* HapticsBoxEngine.swift */; };
+		5210152F238AD2F500858FFE /* Gravel.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 52101529238AD2F500858FFE /* Gravel.ahap */; };
+		52101530238AD2F500858FFE /* Oscillate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210152A238AD2F500858FFE /* Oscillate.ahap */; };
+		52101531238AD2F500858FFE /* Inflate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210152B238AD2F500858FFE /* Inflate.ahap */; };
+		52101532238AD2F500858FFE /* Boing.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210152C238AD2F500858FFE /* Boing.ahap */; };
+		52101533238AD2F500858FFE /* Sparkle.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210152D238AD2F500858FFE /* Sparkle.ahap */; };
+		52101534238AD2F500858FFE /* Rumble.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210152E238AD2F500858FFE /* Rumble.ahap */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +61,13 @@
 		52101521238984B300858FFE /* HapticPatternLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPatternLoader.swift; sourceTree = "<group>"; };
 		52101523238A734500858FFE /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		52101525238AC1D700858FFE /* HapticsBoxLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsBoxLogger.swift; sourceTree = "<group>"; };
+		52101527238ACB3400858FFE /* HapticsBoxEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsBoxEngine.swift; sourceTree = "<group>"; };
+		52101529238AD2F500858FFE /* Gravel.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gravel.ahap; sourceTree = "<group>"; };
+		5210152A238AD2F500858FFE /* Oscillate.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Oscillate.ahap; sourceTree = "<group>"; };
+		5210152B238AD2F500858FFE /* Inflate.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Inflate.ahap; sourceTree = "<group>"; };
+		5210152C238AD2F500858FFE /* Boing.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Boing.ahap; sourceTree = "<group>"; };
+		5210152D238AD2F500858FFE /* Sparkle.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sparkle.ahap; sourceTree = "<group>"; };
+		5210152E238AD2F500858FFE /* Rumble.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Rumble.ahap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +113,7 @@
 				521014F02389434700858FFE /* AppDelegate.swift */,
 				521014F22389434700858FFE /* SceneDelegate.swift */,
 				521014F42389434700858FFE /* ViewController.swift */,
+				52101527238ACB3400858FFE /* HapticsBoxEngine.swift */,
 				521014F62389434700858FFE /* Main.storyboard */,
 				521014F92389434A00858FFE /* Assets.xcassets */,
 				521014FB2389434A00858FFE /* LaunchScreen.storyboard */,
@@ -133,6 +148,12 @@
 			isa = PBXGroup;
 			children = (
 				5210151E23897E3000858FFE /* OnceHeartbeat.ahap */,
+				5210152C238AD2F500858FFE /* Boing.ahap */,
+				52101529238AD2F500858FFE /* Gravel.ahap */,
+				5210152B238AD2F500858FFE /* Inflate.ahap */,
+				5210152A238AD2F500858FFE /* Oscillate.ahap */,
+				5210152E238AD2F500858FFE /* Rumble.ahap */,
+				5210152D238AD2F500858FFE /* Sparkle.ahap */,
 			);
 			path = ahap;
 			sourceTree = "<group>";
@@ -229,9 +250,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				521014FD2389434A00858FFE /* LaunchScreen.storyboard in Resources */,
+				52101532238AD2F500858FFE /* Boing.ahap in Resources */,
 				521014FA2389434A00858FFE /* Assets.xcassets in Resources */,
 				5210151F23897E3000858FFE /* OnceHeartbeat.ahap in Resources */,
 				521014F82389434700858FFE /* Main.storyboard in Resources */,
+				52101531238AD2F500858FFE /* Inflate.ahap in Resources */,
+				52101530238AD2F500858FFE /* Oscillate.ahap in Resources */,
+				5210152F238AD2F500858FFE /* Gravel.ahap in Resources */,
+				52101534238AD2F500858FFE /* Rumble.ahap in Resources */,
+				52101533238AD2F500858FFE /* Sparkle.ahap in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +283,7 @@
 				521014F52389434700858FFE /* ViewController.swift in Sources */,
 				521014F12389434700858FFE /* AppDelegate.swift in Sources */,
 				52101522238984B300858FFE /* HapticPatternLoader.swift in Sources */,
+				52101528238ACB3400858FFE /* HapticsBoxEngine.swift in Sources */,
 				521014F32389434700858FFE /* SceneDelegate.swift in Sources */,
 				52101524238A734500858FFE /* FileLoader.swift in Sources */,
 			);

@@ -14,25 +14,101 @@ public class AHAPParser {
         do {
             guard let data = ahapString.data(using: .utf8) else { return nil }
             let hapticPattern = try JSONDecoder().decode( CodableHapticPattern.self, from: data)
-            return hapticPattern
+//            let pattern1 = CHHapticPattern(events: <#T##[CHHapticEvent]#>, parameterCurves: <#T##[CHHapticParameterCurve]#>)
+//            let pattern2 = CHHapticPattern(events: <#T##[CHHapticEvent]#>, parameters: <#T##[CHHapticDynamicParameter]#>)
+            return nil
         } catch let error {
             print("error: \(error)")
             return nil
         }
     }
+
+    internal static func test(ahapString: String) -> Bool {
+        struct pattern: Decodable {
+            public var Event: CodableHapticEvent?
+            public var ParameterCurve: CodableHapticParameterCurve?
+        }
+        struct ahap: Decodable {
+            public var Pattern: [pattern]
+        }
+        do {
+            _ = try JSONDecoder().decode(ahap.self, from: ahapString.data(using: .utf8)!)
+            return true
+        } catch let error {
+            print("failed: \(error)")
+        }
+        return false
+    }
 }
 
-fileprivate class CodableHapticPattern: CHHapticPattern, Decodable {
-    required convenience public init(from decoder: Decoder) throws {
+fileprivate class CodableHapticPattern: Decodable {
+    public var events: [CHHapticEvent] = []
+    public var parameters: [CHHapticDynamicParameter]? = nil
+    public var parameterCurves: [CHHapticParameterCurve]? = nil
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        struct tmp : Decodable {
-            public var Event: CodableHapticEvent
+        let elements = try container.decode([CodableHapticPatternElement].self, forKey: .pattern)
+        self.events = elements.compactMap({$0.event})
+        let parameters = elements.compactMap({$0.parameter})
+        if parameters.count > 0 {
+            self.parameters = parameters
         }
-        let pattern = try container.decode([tmp].self, forKey: .pattern)
-        try self.init(events: pattern.map({$0.Event}), parameters: [])
+        let parameterCurves = elements.compactMap({$0.parameterCurve})
+        if parameterCurves.count > 0 {
+            self.parameterCurves = parameterCurves
+        }
     }
     private enum CodingKeys: String, CodingKey {
         case pattern = "Pattern"
+    }
+}
+
+fileprivate struct CodableHapticPatternElement: Decodable {
+    public var event: CodableHapticEvent?
+    public var parameter: CocableHapticDynamicParameter?
+    public var parameterCurve: CodableHapticParameterCurve?
+    enum CodingKeys: String, CodingKey {
+        case event = "Event"
+        case parameter = "Parameter"
+        case parameterCurve = "ParameterCurve"
+    }
+}
+
+fileprivate class CocableHapticDynamicParameter: CHHapticDynamicParameter, Decodable {
+    required convenience public init(from decoder: Decoder) throws {
+        self.init(parameterID: CHHapticDynamicParameter.ID(rawValue: ""),
+                  value: 0,
+                  relativeTime: 0)
+    }
+}
+
+fileprivate class CodableHapticParameterCurve: CHHapticParameterCurve, Decodable {
+    private class CodableControlPoint: CHHapticParameterCurve.ControlPoint, Decodable {
+        required convenience public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let time = try container.decode(Float.self, forKey: .time)
+            let value = try container.decode(Float.self, forKey: .parameterValue)
+            self.init(relativeTime: TimeInterval(time), value: value)
+        }
+        private enum CodingKeys: String, CodingKey {
+            case time = "Time"
+            case parameterValue = "ParameterValue"
+        }
+    }
+    
+    required convenience public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decode(String.self, forKey: .parameterId)
+        let points = try container.decode(CodableControlPoint.self, forKey: .parameterCurveControlPoints)
+        let time = try container.decode(Float.self, forKey: .time)
+        self.init(parameterID: CHHapticDynamicParameter.ID(rawValue: id),
+                  controlPoints: [points],
+                  relativeTime: TimeInterval(time))
+    }
+    private enum CodingKeys: String, CodingKey {
+        case parameterId = "ParameterID"
+        case parameterCurveControlPoints = "ParameterCurveControlPoints"
+        case time = "Time"
     }
 }
 
