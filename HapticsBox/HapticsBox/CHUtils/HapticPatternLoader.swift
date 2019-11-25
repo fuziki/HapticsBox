@@ -108,12 +108,22 @@ fileprivate class CodableHapticEvent: CHHapticEvent, Decodable {
         let time = try container.decode(Float.self, forKey: .time)
         let event = try container.decode(String.self, forKey: .eventType)
         let param = try container.decode([CodableHapticEventParameter].self, forKey: .eventParameters)
-        self.init(eventType: CHHapticEvent.EventType(rawValue: event), parameters: param, relativeTime: TimeInterval(time))
+        if let durationTime = try? container.decode(Float?.self, forKey: .eventDuration) {
+            self.init(eventType: CHHapticEvent.EventType(rawValue: event),
+                      parameters: param,
+                      relativeTime: TimeInterval(time),
+                      duration: TimeInterval(durationTime))
+            return
+        }
+        self.init(eventType: CHHapticEvent.EventType(rawValue: event),
+                  parameters: param,
+                  relativeTime: TimeInterval(time))
     }
     private enum CodingKeys: String, CodingKey {
         case time = "Time"
         case eventType = "EventType"
         case eventParameters = "EventParameters"
+        case eventDuration = "EventDuration"
     }
 }
 
