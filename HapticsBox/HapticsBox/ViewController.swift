@@ -17,10 +17,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        player = HapticsBoxEngine.shared.makeAdvancedPlayer(withFileName: "OnceHeartbeat")
-        player?.loopEnabled = true
-        player?.loopEnd = 1.0
-        player?.playbackRate = 2
+//        (bundle: .main, name: "Boing", ext: "ahap"),
+//        (bundle: .main, name: "Gravel", ext: "ahap"),
+//        (bundle: .main, name: "Inflate", ext: "ahap"),
+//        (bundle: .main, name: "Oscillate", ext: "ahap"),
+//        (bundle: .main, name: "Rumble", ext: "ahap"),
+//        (bundle: .main, name: "Sparkle", ext: "ahap")]
+
+        player = HapticsBoxEngine.shared.makeAdvancedPlayer(withFileName: "Oscillate")
+//        player?.loopEnabled = true
+//        player?.loopEnd = 1.0
+//        player?.playbackRate = 1
         do {
             try player?.start(atTime: 0)
         } catch { // Engine startup errors
