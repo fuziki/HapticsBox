@@ -13,10 +13,9 @@ public class AHAPParser {
     public static func parse(ahapString: String) -> CHHapticPattern? {
         do {
             guard let data = ahapString.data(using: .utf8) else { return nil }
-            let hapticPattern = try JSONDecoder().decode(CodableHapticPattern.self, from: data)
-//            let pattern1 = CHHapticPattern(events: <#T##[CHHapticEvent]#>, parameterCurves: <#T##[CHHapticParameterCurve]#>)
-//            let pattern2 = CHHapticPattern(events: <#T##[CHHapticEvent]#>, parameters: <#T##[CHHapticDynamicParameter]#>)
-            return nil
+            let cp = try JSONDecoder().decode(CodableHapticPattern.self, from: data)
+            let pattern = try CHHapticPattern(events: cp.events, parameterCurves: cp.parameters ?? [])
+            return pattern
         } catch let error {
             print("error: \(error)")
             return nil
@@ -60,18 +59,18 @@ fileprivate struct CodableHapticPatternElement: Decodable {
     }
 }
 
-fileprivate class CocableHapticDynamicParameter: CHHapticDynamicParameter, Decodable {
-    required convenience public init(from decoder: Decoder) throws {
-        self.init(parameterID: CHHapticDynamicParameter.ID(rawValue: ""),
-                  value: 0,
-                  relativeTime: 0)
-    }
-    private enum CodingKeys: String, CodingKey {
-        case parameterId = "ParameterID"
-        case ParameterCurveControlPoints = "ParameterCurveControlPoints"
-        case time = "Time"
-    }
-}
+//fileprivate class CocableHapticDynamicParameter: CHHapticDynamicParameter, Decodable {
+//    required convenience public init(from decoder: Decoder) throws {
+//        self.init(parameterID: CHHapticDynamicParameter.ID(rawValue: ""),
+//                  value: 0,
+//                  relativeTime: 0)
+//    }
+//    private enum CodingKeys: String, CodingKey {
+//        case parameterId = "ParameterID"
+//        case ParameterCurveControlPoints = "ParameterCurveControlPoints"
+//        case time = "Time"
+//    }
+//}
 
 fileprivate class CodableHapticParameterCurve: CHHapticParameterCurve, Decodable {
     private class CodableControlPoint: CHHapticParameterCurve.ControlPoint, Decodable {
