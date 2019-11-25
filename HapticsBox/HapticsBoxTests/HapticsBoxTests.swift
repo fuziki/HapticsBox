@@ -37,7 +37,7 @@ class HapticsBoxTests: XCTestCase {
             print("test: \(ahap)")
             let str = TestBundleLoader().load(bundle: ahap.bundle, name: ahap.name, extension: ahap.ext)
             let success = AHAPParser.test(ahapString: str)
-            XCTAssertEqual(success, true)
+            XCTAssertEqual(success != nil, true)
         }
         
     }

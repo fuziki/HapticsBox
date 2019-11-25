@@ -22,14 +22,14 @@ public class AHAPParser {
         }
     }
 
-    internal static func test(ahapString: String) -> Bool {
+    internal static func test(ahapString: String) -> (events: Int, parameters: Int)? {
         do {
-            _ = try JSONDecoder().decode(CodableHapticPattern.self, from: ahapString.data(using: .utf8)!)
-            return true
+            let cp = try JSONDecoder().decode(CodableHapticPattern.self, from: ahapString.data(using: .utf8)!)
+            return (events: cp.events.count, parameters: (cp.parameters ?? []).count)
         } catch let error {
             print("failed: \(error)")
         }
-        return false
+        return nil
     }
 }
 
