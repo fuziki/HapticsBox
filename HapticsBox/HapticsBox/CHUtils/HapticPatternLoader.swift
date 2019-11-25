@@ -13,7 +13,7 @@ public class AHAPParser {
     public static func parse(ahapString: String) -> CHHapticPattern? {
         do {
             guard let data = ahapString.data(using: .utf8) else { return nil }
-            let hapticPattern = try JSONDecoder().decode( CodableHapticPattern.self, from: data)
+            let hapticPattern = try JSONDecoder().decode(CodableHapticPattern.self, from: data)
 //            let pattern1 = CHHapticPattern(events: <#T##[CHHapticEvent]#>, parameterCurves: <#T##[CHHapticParameterCurve]#>)
 //            let pattern2 = CHHapticPattern(events: <#T##[CHHapticEvent]#>, parameters: <#T##[CHHapticDynamicParameter]#>)
             return nil
@@ -24,15 +24,8 @@ public class AHAPParser {
     }
 
     internal static func test(ahapString: String) -> Bool {
-        struct pattern: Decodable {
-            public var Event: CodableHapticEvent?
-            public var ParameterCurve: CodableHapticParameterCurve?
-        }
-        struct ahap: Decodable {
-            public var Pattern: [pattern]
-        }
         do {
-            _ = try JSONDecoder().decode(ahap.self, from: ahapString.data(using: .utf8)!)
+            _ = try JSONDecoder().decode(CodableHapticPattern.self, from: ahapString.data(using: .utf8)!)
             return true
         } catch let error {
             print("failed: \(error)")
@@ -43,8 +36,7 @@ public class AHAPParser {
 
 fileprivate class CodableHapticPattern: Decodable {
     public var events: [CHHapticEvent] = []
-    public var parameters: [CHHapticDynamicParameter]? = nil
-    public var parameterCurves: [CHHapticParameterCurve]? = nil
+    public var parameters: [CodableHapticParameterCurve]? = nil
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let elements = try container.decode([CodableHapticPatternElement].self, forKey: .pattern)
@@ -52,10 +44,6 @@ fileprivate class CodableHapticPattern: Decodable {
         let parameters = elements.compactMap({$0.parameter})
         if parameters.count > 0 {
             self.parameters = parameters
-        }
-        let parameterCurves = elements.compactMap({$0.parameterCurve})
-        if parameterCurves.count > 0 {
-            self.parameterCurves = parameterCurves
         }
     }
     private enum CodingKeys: String, CodingKey {
@@ -65,12 +53,10 @@ fileprivate class CodableHapticPattern: Decodable {
 
 fileprivate struct CodableHapticPatternElement: Decodable {
     public var event: CodableHapticEvent?
-    public var parameter: CocableHapticDynamicParameter?
-    public var parameterCurve: CodableHapticParameterCurve?
+    public var parameter: CodableHapticParameterCurve?
     enum CodingKeys: String, CodingKey {
         case event = "Event"
         case parameter = "Parameter"
-        case parameterCurve = "ParameterCurve"
     }
 }
 
@@ -79,6 +65,11 @@ fileprivate class CocableHapticDynamicParameter: CHHapticDynamicParameter, Decod
         self.init(parameterID: CHHapticDynamicParameter.ID(rawValue: ""),
                   value: 0,
                   relativeTime: 0)
+    }
+    private enum CodingKeys: String, CodingKey {
+        case parameterId = "ParameterID"
+        case ParameterCurveControlPoints = "ParameterCurveControlPoints"
+        case time = "Time"
     }
 }
 

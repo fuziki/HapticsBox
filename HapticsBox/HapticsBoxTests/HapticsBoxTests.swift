@@ -26,7 +26,12 @@ class HapticsBoxTests: XCTestCase {
         
         let ahaps: [(bundle: TestBundleLoader.BundlePosition, name: String, ext: String)] =
             [(bundle: .`self`, name: "Full", ext: "ahap"),
-             (bundle: .main, name: "Boing", ext: "ahap")]
+             (bundle: .main, name: "Boing", ext: "ahap"),
+             (bundle: .main, name: "Gravel", ext: "ahap"),
+             (bundle: .main, name: "Inflate", ext: "ahap"),
+             (bundle: .main, name: "Oscillate", ext: "ahap"),
+             (bundle: .main, name: "Rumble", ext: "ahap"),
+             (bundle: .main, name: "Sparkle", ext: "ahap")]
         
         for ahap in ahaps {
             print("test: \(ahap)")
