@@ -53,6 +53,7 @@ fileprivate class CodableHapticPattern: Decodable {
 fileprivate struct CodableHapticPatternElement: Decodable {
     public var event: CodableHapticEvent?
     public var parameterCurve: CodableHapticParameterCurve?
+    public var parameter: CocableHapticDynamicParameter?
     enum CodingKeys: String, CodingKey {
         case event = "Event"
         case parameterCurve = "ParameterCurve"
