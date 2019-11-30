@@ -19,7 +19,7 @@
 		52101518238974A400858FFE /* Event.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 52101517238974A400858FFE /* Event.ahap */; };
 		5210151C23897DCA00858FFE /* Full.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210151B23897DCA00858FFE /* Full.ahap */; };
 		5210151F23897E3000858FFE /* OnceHeartbeat.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 5210151E23897E3000858FFE /* OnceHeartbeat.ahap */; };
-		52101522238984B300858FFE /* HapticPatternLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101521238984B300858FFE /* HapticPatternLoader.swift */; };
+		52101522238984B300858FFE /* AHAPParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101521238984B300858FFE /* AHAPParser.swift */; };
 		52101524238A734500858FFE /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101523238A734500858FFE /* FileLoader.swift */; };
 		52101526238AC1D700858FFE /* HapticsBoxLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101525238AC1D700858FFE /* HapticsBoxLogger.swift */; };
 		52101528238ACB3400858FFE /* HapticsBoxEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52101527238ACB3400858FFE /* HapticsBoxEngine.swift */; };
@@ -58,7 +58,7 @@
 		52101517238974A400858FFE /* Event.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Event.ahap; sourceTree = "<group>"; };
 		5210151B23897DCA00858FFE /* Full.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Full.ahap; sourceTree = "<group>"; };
 		5210151E23897E3000858FFE /* OnceHeartbeat.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OnceHeartbeat.ahap; sourceTree = "<group>"; };
-		52101521238984B300858FFE /* HapticPatternLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPatternLoader.swift; sourceTree = "<group>"; };
+		52101521238984B300858FFE /* AHAPParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHAPParser.swift; sourceTree = "<group>"; };
 		52101523238A734500858FFE /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		52101525238AC1D700858FFE /* HapticsBoxLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsBoxLogger.swift; sourceTree = "<group>"; };
 		52101527238ACB3400858FFE /* HapticsBoxEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsBoxEngine.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				52101525238AC1D700858FFE /* HapticsBoxLogger.swift */,
-				52101521238984B300858FFE /* HapticPatternLoader.swift */,
+				52101521238984B300858FFE /* AHAPParser.swift */,
 				52101523238A734500858FFE /* FileLoader.swift */,
 			);
 			path = CHUtils;
@@ -282,7 +282,7 @@
 				52101526238AC1D700858FFE /* HapticsBoxLogger.swift in Sources */,
 				521014F52389434700858FFE /* ViewController.swift in Sources */,
 				521014F12389434700858FFE /* AppDelegate.swift in Sources */,
-				52101522238984B300858FFE /* HapticPatternLoader.swift in Sources */,
+				52101522238984B300858FFE /* AHAPParser.swift in Sources */,
 				52101528238ACB3400858FFE /* HapticsBoxEngine.swift in Sources */,
 				521014F32389434700858FFE /* SceneDelegate.swift in Sources */,
 				52101524238A734500858FFE /* FileLoader.swift in Sources */,

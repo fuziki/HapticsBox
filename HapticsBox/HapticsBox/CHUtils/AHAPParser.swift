@@ -56,21 +56,26 @@ fileprivate struct CodableHapticPatternElement: Decodable {
     enum CodingKeys: String, CodingKey {
         case event = "Event"
         case parameterCurve = "ParameterCurve"
+        case parameter = "Parameter"
     }
 }
 
-//fileprivate class CocableHapticDynamicParameter: CHHapticDynamicParameter, Decodable {
-//    required convenience public init(from decoder: Decoder) throws {
-//        self.init(parameterID: CHHapticDynamicParameter.ID(rawValue: ""),
-//                  value: 0,
-//                  relativeTime: 0)
-//    }
-//    private enum CodingKeys: String, CodingKey {
-//        case parameterId = "ParameterID"
-//        case ParameterCurveControlPoints = "ParameterCurveControlPoints"
-//        case time = "Time"
-//    }
-//}
+fileprivate class CocableHapticDynamicParameter: CHHapticDynamicParameter, Decodable {
+    required convenience public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decode(String.self, forKey: .parameterId)
+        let value = try container.decode(Float.self, forKey: .parameterValue)
+        let time = try container.decode(Float.self, forKey: .time)
+        self.init(parameterID: CHHapticDynamicParameter.ID(rawValue: id),
+                  value: value,
+                  relativeTime: TimeInterval(time))
+    }
+    private enum CodingKeys: String, CodingKey {
+        case parameterId = "parameterID"
+        case parameterValue = "ParameterValue"
+        case time = "Time"
+    }
+}
 
 fileprivate class CodableHapticParameterCurve: CHHapticParameterCurve, Decodable {
     private class CodableControlPoint: CHHapticParameterCurve.ControlPoint, Decodable {
