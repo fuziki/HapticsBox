@@ -16,21 +16,32 @@ public class HapticsBoxEngine {
         startEngine()
     }
     
-    public func makeAdvancedPlayer(withFileName fileName: String, extension ext: String = "ahap") -> CHHapticAdvancedPatternPlayer? {
+    public func play(fileName: String, extension ext: String = "ahap") {
+        guard let path = Bundle.main.path(forResource: fileName, ofType: ext) else {
+            return
+        }
+        do {
+            try engine?.playPattern(from: URL(fileURLWithPath: path))
+        } catch let error {
+            print("An error occured playing \(error).")
+        }
+    }
+
+    public func makeAdvancedPlayer(fileName: String, extension ext: String = "ahap") -> CHHapticAdvancedPatternPlayer? {
         if let str = FileLoader().loadString(fileName: fileName, extension: ext) {
-            return self.makeAdvancedPlayer(withAhapString: str)
+            return self.makeAdvancedPlayer(ahapString: str)
         }
         return nil
     }
     
-    public func makeAdvancedPlayer(withAhapString ahapString: String) -> CHHapticAdvancedPatternPlayer? {
+    public func makeAdvancedPlayer(ahapString: String) -> CHHapticAdvancedPatternPlayer? {
         if let pattern = AHAPParser.parse(ahapString: ahapString) {
-            return self.makeAdvancedPlayer(withPattern: pattern)
+            return self.makeAdvancedPlayer(pattern: pattern)
         }
         return nil
     }
     
-    public func makeAdvancedPlayer(withPattern pattern: CHHapticPattern) -> CHHapticAdvancedPatternPlayer? {
+    public func makeAdvancedPlayer(pattern: CHHapticPattern) -> CHHapticAdvancedPatternPlayer? {
         do {
             let player = try engine?.makeAdvancedPlayer(with: pattern)
             return player
