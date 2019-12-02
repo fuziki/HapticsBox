@@ -26,6 +26,44 @@ public class HapticsBoxEngine {
             print("An error occured playing \(error).")
         }
     }
+    
+    public func play2(fileName: String, extension ext: String = "ahap") {
+        if let str = FileLoader().loadString(fileName: fileName, extension: ext),
+            let pattern:CHHapticPattern = AHAPParser.parse(ahapString: str) {
+            do {
+                let dic: [CHHapticPattern.Key : Any] = try pattern.exportDictionary()
+                let data = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
+                
+                try engine?.playPattern(from: data)
+            } catch let error {
+                print("An error occured playing \(error).")
+            }
+        }
+    }
+    
+    public func makePlayer(fileName: String, extension ext: String = "ahap") -> CHHapticPatternPlayer? {
+        if let str = FileLoader().loadString(fileName: fileName, extension: ext) {
+            return self.makePlayer(ahapString: str)
+        }
+        return nil
+    }
+    
+    public func makePlayer(ahapString: String) -> CHHapticPatternPlayer? {
+        if let pattern: CHHapticPattern = AHAPParser.parse(ahapString: ahapString) {
+            return self.makePlayer(pattern: pattern)
+        }
+        return nil
+    }
+    
+    public func makePlayer(pattern: CHHapticPattern) -> CHHapticPatternPlayer? {
+        do {
+            let player = try engine?.makePlayer(with: pattern)
+            return player
+        } catch let error {
+            print("error: \(error)")
+        }
+        return nil
+    }
 
     public func makeAdvancedPlayer(fileName: String, extension ext: String = "ahap") -> CHHapticAdvancedPatternPlayer? {
         if let str = FileLoader().loadString(fileName: fileName, extension: ext) {
@@ -35,7 +73,7 @@ public class HapticsBoxEngine {
     }
     
     public func makeAdvancedPlayer(ahapString: String) -> CHHapticAdvancedPatternPlayer? {
-        if let pattern = AHAPParser.parse(ahapString: ahapString) {
+        if let pattern: CHHapticPattern = AHAPParser.parse(ahapString: ahapString) {
             return self.makeAdvancedPlayer(pattern: pattern)
         }
         return nil

@@ -16,7 +16,7 @@ public class AHAPParser {
             let cp = try JSONDecoder().decode(CodableHapticPattern.self, from: data)
             let pattern = try CHHapticPattern(events: cp.events, parameterCurves: cp.parameterCurve ?? [])
             do {
-                let dic = try pattern.exportDictionary()
+                let dic: [CHHapticPattern.Key : Any] = try pattern.exportDictionary()
                 print("dic: \(dic)")
             } catch let error {
                 print("error: \(error)")
@@ -28,10 +28,10 @@ public class AHAPParser {
         }
     }
 
-    internal static func test(ahapString: String) -> (events: Int, parameters: Int)? {
+    internal static func test(ahapString: String) -> (events: [CHHapticEvent], parameters: [CHHapticParameterCurve])? {
         do {
             let cp = try JSONDecoder().decode(CodableHapticPattern.self, from: ahapString.data(using: .utf8)!)
-            return (events: cp.events.count, parameters: (cp.parameterCurve ?? []).count)
+            return (events: cp.events, parameters: (cp.parameterCurve ?? []))
         } catch let error {
             print("failed: \(error)")
         }
