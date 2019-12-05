@@ -53,14 +53,20 @@ class ViewController: UIViewController {
             print("An error occured playing \(error).")
         }
         
-        let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height), collectionViewLayout: UICollectionViewFlowLayout())
+        let layout = UICollectionViewFlowLayout()
+        let collectionView =
+            UICollectionView(frame: CGRect(x: 0, y: 0,
+                                           width: self.view.frame.size.width,
+                                           height: self.view.frame.size.height),
+                             collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor.white
-        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        collectionView.register(CollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header")
-        
+        collectionView.register(CollectionViewCell.self,
+                                forCellWithReuseIdentifier: String(describing: CollectionViewCell.self))
+        collectionView.register(CollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: String(describing: CollectionReusableView.self))
         collectionView.delegate = self
         collectionView.dataSource = self
-        
         self.view.addSubview(collectionView)
     }
 }
@@ -89,7 +95,7 @@ extension ViewController: UICollectionViewDataSource {
                         at indexPath: IndexPath) -> UICollectionReusableView {
         let reusableView: UICollectionReusableView = collectionView
             .dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
-                                              withReuseIdentifier: "Header",
+                                              withReuseIdentifier: String(describing: CollectionReusableView.self),
                                               for: indexPath)
         guard let collectionReusableView = reusableView as? CollectionReusableView else {
             return reusableView
@@ -102,8 +108,9 @@ extension ViewController: UICollectionViewDataSource {
     //cell
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
-                                                      for: indexPath as IndexPath)
+        let cell: UICollectionViewCell = collectionView
+            .dequeueReusableCell(withReuseIdentifier: String(describing: CollectionViewCell.self),
+                                 for: indexPath)
         guard let collectionViewCell = cell as? CollectionViewCell else {
             return cell
         }
@@ -125,7 +132,7 @@ extension ViewController:  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        return UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
     }
     
     //secsion size
