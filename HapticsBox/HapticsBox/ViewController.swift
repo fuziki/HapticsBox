@@ -87,7 +87,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",for: indexPath as IndexPath) as! CollectionViewCell
         let cellText = data[indexPath.section][indexPath.item]
-        cell.setUpContents(textName: cellText)
+        cell.set(labelText: cellText)
         return cell
     }
     
@@ -95,7 +95,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let collectionViewHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header", for: indexPath) as! CollectionReusableView
         let headerText = sectionName[indexPath.section][indexPath.item]
-        collectionViewHeader.setUpContents(titleText: headerText)
+        collectionViewHeader.set(labelText: headerText)
         return collectionViewHeader
     }
 }
@@ -103,7 +103,7 @@ extension ViewController: UICollectionViewDataSource {
 extension ViewController:  UICollectionViewDelegateFlowLayout {
     // セルの大きさ
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width * 0.6, height: 100)
+        return CGSize(width: collectionView.frame.width - 20, height: 100)
     }
     
     // セルの余白
@@ -114,77 +114,5 @@ extension ViewController:  UICollectionViewDelegateFlowLayout {
     // ヘッダーのサイズ
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.size.width, height:50)
-    }
-}
-
-// CollectionViewのヘッダー設定
-class CollectionReusableView: UICollectionReusableView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setUpViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var titleLabel: UILabel =  {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: UIFont.Weight(rawValue: 10))
-        label.textColor = UIColor.darkGray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    func setUpViews() {
-        backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1.0)
-        
-        addSubview(titleLabel)
-        
-        titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20).isActive = true
-        titleLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1).isActive = true
-        titleLabel.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1).isActive = true
-    }
-    
-    func setUpContents(titleText: String) {
-        titleLabel.text = titleText
-    }
-}
-
-class CollectionViewCell: UICollectionViewCell {
-    private let cellNameLabel: UILabel = {
-        let label = UILabel()
-        label.frame = CGRect(x: 15, y: 50, width: 50, height: 50)
-        label.font = .systemFont(ofSize: 14, weight: UIFont.Weight(rawValue: 1))
-        label.textColor = UIColor.darkGray
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private let cellImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.frame = CGRect(x: 15, y: 10, width: 50, height: 50)
-        return imageView
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = .gray
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setup() {
-        contentView.addSubview(cellImageView)
-        contentView.addSubview(cellNameLabel)
-    }
-    
-    func setUpContents(textName: String) {
-//        cellImageView.image = image
-        cellNameLabel.text = textName
     }
 }
