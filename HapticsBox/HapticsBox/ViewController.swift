@@ -66,7 +66,6 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UICollectionViewDelegate {
-    // セル選択時の処理
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(data[indexPath.section][indexPath.row])
     }
@@ -88,19 +87,29 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        let collectionViewHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header", for: indexPath) as! CollectionReusableView
+        let reusableView: UICollectionReusableView = collectionView
+            .dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
+                                              withReuseIdentifier: "Header",
+                                              for: indexPath)
+        guard let collectionReusableView = reusableView as? CollectionReusableView else {
+            return reusableView
+        }
         let headerText = sectionName[indexPath.section][indexPath.item]
-        collectionViewHeader.set(labelText: headerText)
-        return collectionViewHeader
+        collectionReusableView.set(labelText: headerText)
+        return collectionReusableView
     }
 
     //cell
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",for: indexPath as IndexPath) as! CollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",
+                                                      for: indexPath as IndexPath)
+        guard let collectionViewCell = cell as? CollectionViewCell else {
+            return cell
+        }
         let cellText = data[indexPath.section][indexPath.item]
-        cell.set(labelText: cellText)
-        return cell
+        collectionViewCell.set(labelText: cellText)
+        return collectionViewCell
     }
 }
 
