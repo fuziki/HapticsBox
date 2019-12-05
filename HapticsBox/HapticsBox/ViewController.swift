@@ -67,52 +67,62 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDelegate {
     // セル選択時の処理
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(data[indexPath.section][indexPath.row])
     }
 }
 
 extension ViewController: UICollectionViewDataSource {
-    // セルの数を返す
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.data[section].count
-    }
-    
-    // ヘッダーの数
+    //number of section
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return self.data.count
     }
-    
-    // セルの設定
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",for: indexPath as IndexPath) as! CollectionViewCell
-        let cellText = data[indexPath.section][indexPath.item]
-        cell.set(labelText: cellText)
-        return cell
+
+    //number of cells
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return self.data[section].count
     }
     
-    // ヘッダーの設定
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    //section
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
         let collectionViewHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header", for: indexPath) as! CollectionReusableView
         let headerText = sectionName[indexPath.section][indexPath.item]
         collectionViewHeader.set(labelText: headerText)
         return collectionViewHeader
     }
+
+    //cell
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell",for: indexPath as IndexPath) as! CollectionViewCell
+        let cellText = data[indexPath.section][indexPath.item]
+        cell.set(labelText: cellText)
+        return cell
+    }
 }
 
 extension ViewController:  UICollectionViewDelegateFlowLayout {
-    // セルの大きさ
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    //cell size
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 20, height: 100)
     }
     
-    // セルの余白
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    //inset size
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     }
     
-    // ヘッダーのサイズ
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    //secsion size
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.size.width, height:50)
     }
 }
