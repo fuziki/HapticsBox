@@ -11,8 +11,8 @@ import CoreHaptics
 
 class ViewController: UIViewController {
     
-    let sectionName = [["Section1"], ["Section2"], ["Section3"]]
-    let data = [["item1", "item2", "item3"], ["item4", "item5", "item6"], ["item7", "item8", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9", "item9"]]
+    let sectionNames = ["play", "nomal player", "advance player"]
+    let ahapFiles = ["Boing", "Gravel", "Inflate", "Oscillate", "Rumble", "Sparkle"]
     
 //    var player: CHHapticAdvancedPatternPlayer? = nil
     var player: CHHapticPatternPlayer? = nil
@@ -73,20 +73,21 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(data[indexPath.section][indexPath.row])
+        let section = indexPath.section, item = indexPath.item
+        print("section: \(section), item: \(item)")
     }
 }
 
 extension ViewController: UICollectionViewDataSource {
     //number of section
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.data.count
+        return self.sectionNames.count
     }
 
     //number of cells
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return self.data[section].count
+        return self.ahapFiles.count
     }
     
     //section
@@ -100,8 +101,7 @@ extension ViewController: UICollectionViewDataSource {
         guard let collectionReusableView = reusableView as? CollectionReusableView else {
             return reusableView
         }
-        let headerText = sectionName[indexPath.section][indexPath.item]
-        collectionReusableView.set(labelText: headerText)
+        collectionReusableView.set(labelText: self.sectionNames[indexPath.section])
         return collectionReusableView
     }
 
@@ -114,8 +114,7 @@ extension ViewController: UICollectionViewDataSource {
         guard let collectionViewCell = cell as? CollectionViewCell else {
             return cell
         }
-        let cellText = data[indexPath.section][indexPath.item]
-        collectionViewCell.set(labelText: cellText)
+        collectionViewCell.set(labelText: self.ahapFiles[indexPath.item])
         return collectionViewCell
     }
 }
