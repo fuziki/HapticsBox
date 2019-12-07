@@ -11,10 +11,13 @@ import UIKit
 import CoreHaptics
 
 class HeartBeatsViewController: UIViewController {
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
     }
+    
+    @IBAction func closeView(_ sender: Any) {
+        AppController.shared.goHome()
+    }    
 }

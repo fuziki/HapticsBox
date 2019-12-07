@@ -9,6 +9,18 @@
 import UIKit
 import CoreHaptics
 
+class AppController {
+    public static let shared = AppController()
+    private init() {}
+    private var goHomeHandler: (() -> Void)? = nil
+    fileprivate func set(goHomeHandler: (() -> Void)?) {
+        self.goHomeHandler = goHomeHandler
+    }
+    public func goHome() {
+        goHomeHandler?()
+    }
+}
+
 class ViewController: UIViewController {
     
     let sectionNames = ["play", "nomal player", "advance player"]
@@ -19,6 +31,16 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         setupUI()
+        
+        AppController.shared.set(goHomeHandler: { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [weak self] in
+            let storyboard: UIStoryboard = UIStoryboard(name: "HeartBeats", bundle: nil)
+            let nextView = storyboard.instantiateInitialViewController()
+            self?.present(nextView!, animated: true, completion: nil)
+        })
     }
     
     private var adPlayer: CHHapticAdvancedPatternPlayer?

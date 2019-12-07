@@ -120,7 +120,8 @@
 			children = (
 				5247982C239B794C00C4EE31 /* App */,
 				5247982B239B794200C4EE31 /* HapticsBoxEngine */,
-				5247982E239BA73200C4EE31 /* View */,
+				5247982A239B793000C4EE31 /* Home */,
+				5247982E239BA73200C4EE31 /* Applications */,
 			);
 			path = HapticsBox;
 			sourceTree = "<group>";
@@ -170,7 +171,7 @@
 			path = CHUtils;
 			sourceTree = "<group>";
 		};
-		5247982A239B793000C4EE31 /* Main */ = {
+		5247982A239B793000C4EE31 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				521014F62389434700858FFE /* Main.storyboard */,
@@ -178,7 +179,7 @@
 				52479826239942AB00C4EE31 /* CollectionReusableView.swift */,
 				52479828239942C300C4EE31 /* CollectionViewCell.swift */,
 			);
-			path = Main;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		5247982B239B794200C4EE31 /* HapticsBoxEngine */ = {
@@ -210,13 +211,12 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		5247982E239BA73200C4EE31 /* View */ = {
+		5247982E239BA73200C4EE31 /* Applications */ = {
 			isa = PBXGroup;
 			children = (
-				5247982A239B793000C4EE31 /* Main */,
 				5247982F239BA88300C4EE31 /* HeartBeats */,
 			);
-			path = View;
+			path = Applications;
 			sourceTree = "<group>";
 		};
 		5247982F239BA88300C4EE31 /* HeartBeats */ = {
