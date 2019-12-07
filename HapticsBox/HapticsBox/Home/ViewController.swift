@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     let storyboardNames = [(section: "Applications",
                             cells: ["HapticSampler", "HeartBeats"])]
     
-    private var audioTransitionStoryboard: String? = "a"
+    private var audioTransitionStoryboard: String? = "HeartBeats"
     
     override func viewDidLoad() {
         super.viewDidLoad()
