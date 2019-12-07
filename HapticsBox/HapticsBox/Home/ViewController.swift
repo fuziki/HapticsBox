@@ -87,7 +87,7 @@ extension ViewController: UICollectionViewDataSource {
         guard let collectionReusableView = reusableView as? CollectionReusableView else {
             return reusableView
         }
-        collectionReusableView.set(labelText: "Applications")
+        collectionReusableView.set(labelText: self.storyboardNames[indexPath.section].section)
         return collectionReusableView
     }
 
