@@ -15,6 +15,8 @@ class HeartBeatsViewController: UIViewController {
     
     private var heartBeatsPlayer: CHHapticAdvancedPatternPlayer!
     private var arSession: ARSession!
+    
+    @IBOutlet weak var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +36,8 @@ class HeartBeatsViewController: UIViewController {
         arSession.delegate = self
         let conf = ARFaceTrackingConfiguration()
         arSession.run(conf, options: [])
+        
+        updateImage(number: 1)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,9 +52,30 @@ class HeartBeatsViewController: UIViewController {
         let max: Float = 0.3
         len = simd_clamp(len, min, max)
         len = (len - min) / (max - min)
+        updateImage(len: len)
         let rate = 2 - len
         heartBeatsPlayer.playbackRate = rate
         print("face: \(anchor.transform.columns.3.y), rate: \(rate)")
+    }
+
+    func updateImage(len: Float) {
+        let num: Int
+        switch len {
+        case let l where l >= 1:
+            num = 1
+        case let l where l > 0.5:
+            num = 2
+        case let l where l > 0.2:
+            num = 3
+        default:
+            num = 4
+        }
+        updateImage(number: num)
+    }
+
+    func updateImage(number: Int) {
+        let num = min(max(number, 1), 4)
+        imageView.image = UIImage(named: "HeartBeats00\(num).PNG")
     }
 
     
