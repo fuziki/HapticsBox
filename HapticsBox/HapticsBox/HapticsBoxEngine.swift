@@ -27,20 +27,6 @@ public class HapticsBoxEngine {
         }
     }
     
-    public func play2(fileName: String, extension ext: String = "ahap") {
-        if let str = FileLoader().loadString(fileName: fileName, extension: ext),
-            let pattern:CHHapticPattern = AHAPParser.parse(ahapString: str) {
-            do {
-                let dic: [CHHapticPattern.Key : Any] = try pattern.exportDictionary()
-                let data = try JSONSerialization.data(withJSONObject: dic, options: .prettyPrinted)
-                
-                try engine?.playPattern(from: data)
-            } catch let error {
-                print("An error occured playing \(error).")
-            }
-        }
-    }
-    
     public func makePlayer(fileName: String, extension ext: String = "ahap") -> CHHapticPatternPlayer? {
         if let str = FileLoader().loadString(fileName: fileName, extension: ext) {
             return self.makePlayer(ahapString: str)

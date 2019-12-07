@@ -14,45 +14,54 @@ class ViewController: UIViewController {
     let sectionNames = ["play", "nomal player", "advance player"]
     let ahapFiles = ["Boing", "Gravel", "Inflate", "Oscillate", "Rumble", "Sparkle"]
     
-//    var player: CHHapticAdvancedPatternPlayer? = nil
-    var player: CHHapticPatternPlayer? = nil
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-//        (bundle: .main, name: "Boing", ext: "ahap"),
-//        (bundle: .main, name: "Gravel", ext: "ahap"),
-//        (bundle: .main, name: "Inflate", ext: "ahap"),
-//        (bundle: .main, name: "Oscillate", ext: "ahap"),
-//        (bundle: .main, name: "Rumble", ext: "ahap"),
-//        (bundle: .main, name: "Sparkle", ext: "ahap")]
-
-        player = HapticsBoxEngine.shared.makePlayer(fileName: "Oscillate")
-//        player?.loopEnabled = true
-//        player?.loopEnd = 1.0
-//        player?.playbackRate = 1
-//        HapticsBoxEngine.shared.play2(fileName: "Inflate")
-        
-//        if let str = FileLoader().loadString(fileName: "Inflate", extension: "ahap"),
-//            let pattern = AHAPParser.test(ahapString: str) {
-//            do {
-//                var sum: TimeInterval = 0
-//                for p in pattern.parameters {
-//                    try player?.scheduleParameterCurve(p, atTime: sum)
-//                    sum += p.relativeTime
-//                }
-//            } catch { // Engine startup errors
-//                print("An error occured playing \(error).")
-//            }
-//        }
-        
-        do {
-            try player?.start(atTime: 0)
-        } catch { // Engine startup errors
-            print("An error occured playing \(error).")
+        setupUI()
+    }
+    
+    private var adPlayer: CHHapticAdvancedPatternPlayer?
+    private var lastAdPlayerAHAP: String?
+    internal func play(section: String, ahap: String) {
+        if let adPlayer = self.adPlayer, let lastAdPlayerAHAP = self.lastAdPlayerAHAP {
+            try? adPlayer.stop(atTime: 0)
+            self.adPlayer = nil
+            self.lastAdPlayerAHAP = nil
+            if section == sectionNames[2], lastAdPlayerAHAP == ahap {
+                return
+            }
         }
-        
+        if lastAdPlayerAHAP == ahap {
+            return
+        }
+        switch section {
+        case sectionNames[0]:   //play
+            HapticsBoxEngine.shared.play(fileName: ahap)
+        case sectionNames[1]:   //nomal player
+            let player = HapticsBoxEngine.shared.makePlayer(fileName: ahap)
+            do {
+                try player?.start(atTime: 0)
+            } catch { // Engine startup errors
+                print("An error occured playing \(error).")
+            }
+        case sectionNames[2]:   //advance player
+            lastAdPlayerAHAP = ahap
+            adPlayer = HapticsBoxEngine.shared.makeAdvancedPlayer(fileName: ahap)
+            adPlayer?.loopEnabled = true
+            adPlayer?.playbackRate = 2
+            adPlayer?.loopEnd = 2
+            do {
+                try adPlayer?.start(atTime: 0)
+            } catch { // Engine startup errors
+                print("An error occured playing \(error).")
+            }
+        default:
+            break
+        }
+    }
+    
+    private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         let collectionView =
             UICollectionView(frame: CGRect(x: 0, y: 0,
@@ -73,8 +82,9 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = indexPath.section, item = indexPath.item
+        let section = sectionNames[indexPath.section], item = ahapFiles[indexPath.item]
         print("section: \(section), item: \(item)")
+        self.play(section: section, ahap: item)
     }
 }
 
@@ -124,20 +134,33 @@ extension ViewController:  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 20, height: 100)
+        return CGSize(width: collectionView.frame.width - 20, height: 40)
     }
     
     //inset size
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
     
     //secsion size
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: self.view.frame.size.width, height:50)
+        return CGSize(width: self.view.frame.size.width, height:40)
     }
+    
+    //not use footer
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+//        return CGSize(width: self.view.frame.size.width, height:100)
+//    }
 }

@@ -15,12 +15,6 @@ public class AHAPParser {
             guard let data = ahapString.data(using: .utf8) else { return nil }
             let cp = try JSONDecoder().decode(CodableHapticPattern.self, from: data)
             let pattern = try CHHapticPattern(events: cp.events, parameterCurves: cp.parameterCurve ?? [])
-            do {
-                let dic: [CHHapticPattern.Key : Any] = try pattern.exportDictionary()
-                print("dic: \(dic)")
-            } catch let error {
-                print("error: \(error)")
-            }
             return pattern
         } catch let error {
             print("error: \(error)")
