@@ -28,6 +28,8 @@ class ViewController: UIViewController {
     let storyboardNames = [(section: "Applications",
                             cells: ["HapticSampler", "HeartBeats"])]
     
+    private var audioTransitionStoryboard: String? = "a"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -45,10 +47,19 @@ class ViewController: UIViewController {
         })
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let storyboadName = audioTransitionStoryboard {
+            audioTransitionStoryboard = nil
+           presentViewController(storyboardName: storyboadName)
+        }
+    }
+    
     private func presentViewController(storyboardName: String) {
         let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
-        let nextView = storyboard.instantiateInitialViewController()
-        self.present(nextView!, animated: true, completion: nil)
+        if let nextView = storyboard.instantiateInitialViewController() {
+            self.present(nextView, animated: true, completion: nil)
+        }
     }
 }
 
