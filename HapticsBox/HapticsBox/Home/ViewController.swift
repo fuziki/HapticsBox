@@ -23,27 +23,15 @@ class AppController {
 
 class ViewController: UIViewController {
     
-    let storyboardNames = [(section: "Applications", cells: ["HapticSampler", "HeartBeats"])]
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    let storyboardNames = [(section: "Applications",
+                            cells: ["HapticSampler", "HeartBeats"])]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        setupUI()
-        
-        AppController.shared.set(goHomeHandler: { [weak self] in
-            self?.dismiss(animated: true, completion: nil)
-        })
-    }
-    
-    private func setupUI() {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView =
-            UICollectionView(frame: CGRect(x: 0, y: 0,
-                                           width: self.view.frame.size.width,
-                                           height: self.view.frame.size.height),
-                             collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.white
         collectionView.register(CollectionViewCell.self,
                                 forCellWithReuseIdentifier: String(describing: CollectionViewCell.self))
         collectionView.register(CollectionReusableView.self,
@@ -51,16 +39,23 @@ class ViewController: UIViewController {
                                 withReuseIdentifier: String(describing: CollectionReusableView.self))
         collectionView.delegate = self
         collectionView.dataSource = self
-        self.view.addSubview(collectionView)
+        
+        AppController.shared.set(goHomeHandler: { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        })
+    }
+    
+    private func presentViewController(storyboardName: String) {
+        let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let nextView = storyboard.instantiateInitialViewController()
+        self.present(nextView!, animated: true, completion: nil)
     }
 }
 
 extension ViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let name = self.storyboardNames[indexPath.section].cells[indexPath.item]
-        let storyboard: UIStoryboard = UIStoryboard(name: name, bundle: nil)
-        let nextView = storyboard.instantiateInitialViewController()
-        self.present(nextView!, animated: true, completion: nil)
+        self.presentViewController(storyboardName: name)
     }
 }
 

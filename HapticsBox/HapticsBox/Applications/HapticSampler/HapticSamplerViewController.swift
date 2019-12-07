@@ -14,11 +14,23 @@ class HapticSamplerViewController: UIViewController {
     let sectionNames = ["play", "nomal player", "advance player"]
     let ahapFiles = ["Boing", "Gravel", "Inflate", "Oscillate", "Rumble", "Sparkle"]
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        setupUI()
+        collectionView.register(CollectionViewCell.self,
+                                forCellWithReuseIdentifier: String(describing: CollectionViewCell.self))
+        collectionView.register(CollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: String(describing: CollectionReusableView.self))
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    @IBAction func closeViewController(_ sender: Any) {
+        AppController.shared.goHome()
     }
     
     private var adPlayer: CHHapticAdvancedPatternPlayer?
@@ -59,24 +71,6 @@ class HapticSamplerViewController: UIViewController {
         default:
             break
         }
-    }
-    
-    private func setupUI() {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView =
-            UICollectionView(frame: CGRect(x: 0, y: 0,
-                                           width: self.view.frame.size.width,
-                                           height: self.view.frame.size.height),
-                             collectionViewLayout: layout)
-        collectionView.backgroundColor = UIColor.white
-        collectionView.register(CollectionViewCell.self,
-                                forCellWithReuseIdentifier: String(describing: CollectionViewCell.self))
-        collectionView.register(CollectionReusableView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: String(describing: CollectionReusableView.self))
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        self.view.addSubview(collectionView)
     }
 }
 
@@ -158,9 +152,4 @@ extension HapticSamplerViewController:  UICollectionViewDelegateFlowLayout {
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.size.width, height:40)
     }
-    
-    //not use footer
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-//        return CGSize(width: self.view.frame.size.width, height:100)
-//    }
 }
