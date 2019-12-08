@@ -55,7 +55,7 @@ class HapticSamplerViewController: UIViewController {
             do {
                 try player?.start(atTime: 0)
             } catch { // Engine startup errors
-                print("An error occured playing \(error).")
+                HBLogger.log("An error occured playing \(error).")
             }
         case sectionNames[2]:   //advance player
             lastAdPlayerAHAP = ahap
@@ -66,7 +66,7 @@ class HapticSamplerViewController: UIViewController {
             do {
                 try adPlayer?.start(atTime: 0)
             } catch { // Engine startup errors
-                print("An error occured playing \(error).")
+                HBLogger.log("An error occured playing \(error).")
             }
         default:
             break
@@ -77,7 +77,7 @@ class HapticSamplerViewController: UIViewController {
 extension HapticSamplerViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = sectionNames[indexPath.section], item = ahapFiles[indexPath.item]
-        print("section: \(section), item: \(item)")
+        HBLogger.log("section: \(section), item: \(item)")
         self.play(section: section, ahap: item)
     }
 }

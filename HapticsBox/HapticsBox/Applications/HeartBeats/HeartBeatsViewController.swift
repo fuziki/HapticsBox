@@ -29,7 +29,7 @@ class HeartBeatsViewController: UIViewController {
         do {
             try heartBeatsPlayer?.start(atTime: 0)
         } catch { // Engine startup errors
-            print("An error occured playing \(error).")
+            HBLogger.log("An error occured playing \(error).")
         }
         
         arSession = ARSession()
@@ -55,7 +55,7 @@ class HeartBeatsViewController: UIViewController {
         updateImage(len: len)
         let rate = 2 - len
         heartBeatsPlayer.playbackRate = rate
-        print("face: \(anchor.transform.columns.3.y), rate: \(rate)")
+        HBLogger.log("face: \(anchor.transform.columns.3.y), rate: \(rate)")
     }
 
     func updateImage(len: Float) {

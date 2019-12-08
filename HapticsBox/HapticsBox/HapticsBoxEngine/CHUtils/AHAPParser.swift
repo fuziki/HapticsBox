@@ -17,7 +17,7 @@ public class AHAPParser {
             let pattern = try CHHapticPattern(events: cp.events, parameterCurves: cp.parameterCurve ?? [])
             return pattern
         } catch let error {
-            print("error: \(error)")
+            HBLogger.log("error: \(error)")
             return nil
         }
     }
@@ -27,7 +27,7 @@ public class AHAPParser {
             let cp = try JSONDecoder().decode(CodableHapticPattern.self, from: ahapString.data(using: .utf8)!)
             return (events: cp.events, parameters: (cp.parameterCurve ?? []))
         } catch let error {
-            print("failed: \(error)")
+            HBLogger.log("failed: \(error)")
         }
         return nil
     }

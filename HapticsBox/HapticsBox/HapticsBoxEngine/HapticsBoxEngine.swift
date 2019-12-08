@@ -23,7 +23,7 @@ public class HapticsBoxEngine {
         do {
             try engine?.playPattern(from: URL(fileURLWithPath: path))
         } catch let error {
-            print("An error occured playing \(error).")
+            HBLogger.log("An error occured playing \(error).")
         }
     }
     
@@ -46,7 +46,7 @@ public class HapticsBoxEngine {
             let player = try engine?.makePlayer(with: pattern)
             return player
         } catch let error {
-            print("error: \(error)")
+            HBLogger.log("error: \(error)")
         }
         return nil
     }
@@ -70,7 +70,7 @@ public class HapticsBoxEngine {
             let player = try engine?.makeAdvancedPlayer(with: pattern)
             return player
         } catch let error {
-            print("error: \(error)")
+            HBLogger.log("error: \(error)")
         }
         return nil
     }
@@ -79,36 +79,36 @@ public class HapticsBoxEngine {
         do {
             engine = try CHHapticEngine()
         } catch let error {
-            print("Engine Creation Error: \(error)")
+            HBLogger.log("Engine Creation Error: \(error)")
         }
         
         engine?.stoppedHandler = { reason in
-            print("The engine stopped for reason: \(reason.rawValue)")
+            HBLogger.log("The engine stopped for reason: \(reason.rawValue)")
             switch reason {
-            case .audioSessionInterrupt: print("Audio session interrupt")
-            case .applicationSuspended: print("Application suspended")
-            case .idleTimeout: print("Idle timeout")
-            case .systemError: print("System error")
-            case .notifyWhenFinished: print("Playback finished")
+            case .audioSessionInterrupt: HBLogger.log("Audio session interrupt")
+            case .applicationSuspended: HBLogger.log("Application suspended")
+            case .idleTimeout: HBLogger.log("Idle timeout")
+            case .systemError: HBLogger.log("System error")
+            case .notifyWhenFinished: HBLogger.log("Playback finished")
             @unknown default:
-                print("Unknown error")
+                HBLogger.log("Unknown error")
             }
         }
         
         do {
             try engine?.start()
         } catch { // Engine startup errors
-            print("An error occured playing \(error).")
+            HBLogger.log("An error occured playing \(error).")
         }
 
         // The reset handler provides an opportunity for your app to restart the engine in case of failure.
         engine?.resetHandler = {
             // Try restarting the engine.
-            print("The engine reset --> Restarting now!")
+            HBLogger.log("The engine reset --> Restarting now!")
             do {
                 try self.engine?.start()
             } catch {
-                print("Failed to restart the engine: \(error)")
+                HBLogger.log("Failed to restart the engine: \(error)")
             }
         }
     }

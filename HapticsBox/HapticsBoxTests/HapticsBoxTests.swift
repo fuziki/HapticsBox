@@ -34,7 +34,7 @@ class HapticsBoxTests: XCTestCase {
              (bundle: .main, name: "Sparkle", ext: "ahap")]
         
         for ahap in ahaps {
-            print("test: \(ahap)")
+            HBLogger.log("test: \(ahap)")
             let str = TestBundleLoader().load(bundle: ahap.bundle, name: ahap.name, extension: ahap.ext)
             let success = AHAPParser.test(ahapString: str)
             XCTAssertEqual(success != nil, true)

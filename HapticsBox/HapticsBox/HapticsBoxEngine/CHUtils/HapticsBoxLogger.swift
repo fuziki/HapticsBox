@@ -10,9 +10,9 @@ import Foundation
 
 public class HBLogger {
     static func assert(_ msg: String, file: String = #file, function: String = #function, line: Int = #line) {
-        print("asset: \(msg), file: \(file.components(separatedBy: "/").last ?? ""), line: \(line), func: \(function)")
+        HBLogger.log("asset: \(msg), file: \(file.components(separatedBy: "/").last ?? ""), line: \(line), func: \(function)")
     }
     static func log(_ msg: String, file: String = #file, function: String = #function, line: Int = #line) {
-        print("log: \(msg), file: \(file.components(separatedBy: "/").last ?? ""), line: \(line), func: \(function)")
+        HBLogger.log("log: \(msg), file: \(file.components(separatedBy: "/").last ?? ""), line: \(line), func: \(function)")
     }
 }
