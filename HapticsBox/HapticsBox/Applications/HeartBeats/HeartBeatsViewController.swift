@@ -6,7 +6,6 @@
 //  Copyright © 2019 fuziki.factory. All rights reserved.
 //
 
-
 import UIKit
 import CoreHaptics
 import ARKit

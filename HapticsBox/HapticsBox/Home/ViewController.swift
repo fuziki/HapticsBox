@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     let storyboardNames = [(section: "Applications",
-                            cells: ["HapticSampler", "HeartBeats"])]
+                            cells: ["HapticSampler", "HeartBeats", "Collision"])]
     
     private var audioTransitionStoryboard: String? = nil
     
