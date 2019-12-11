@@ -22,7 +22,7 @@ class CollisionViewController: UIViewController {
     private var motionMgr: CMMotionManager!
     private let motionQueue = OperationQueue()
     
-    private var hapticPlayer: CHHapticPatternPlayer!
+    private var boingPlayer: CHHapticPatternPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class CollisionViewController: UIViewController {
             }
         })
         
-        hapticPlayer = HapticsBoxEngine.shared.makePlayer(fileName: "Boing")
+        boingPlayer = HapticsBoxEngine.shared.makePlayer(fileName: "Boing")
     }
     
     @IBAction func closeView(_ sender: Any) {
@@ -54,17 +54,14 @@ class CollisionViewController: UIViewController {
     
     private func playBoing() {
         do {
-            try hapticPlayer?.start(atTime: 0)
+            try boingPlayer.start(atTime: 0)
         } catch { // Engine startup errors
             HBLogger.log("An error occured playing \(error).")
         }
     }
     
-    private func updateCollisionState(collisioning: Bool) {
-        print("collisioning: \(collisioning)")
-        if collisioning {
-            playBoing()
-        }
+    private func collisionToWall() {
+        playBoing()
     }
     
     private func update(motion: CMDeviceMotion) {
@@ -86,34 +83,39 @@ class CollisionViewController: UIViewController {
         ballPosition = p
     }
     
-    private var collisioningToWall: Bool = false
+    private var collisioningToWall_x: Bool = false
+    private var collisioningToWall_y: Bool = false
     private func calcCollision() {
-        var collision: Bool = false
+        var collision_x: Bool = false
+        var collision_y: Bool = false
         var x = ballPosition.x
         if x < ballSize / 2 {
             x = ballSize / 2
-            ballVelocity.x *= -0.5
-            collision = true
+            ballVelocity.x *= -0.8
+            collision_x = true
         } else if x > Float(self.view.frame.width) - ballSize / 2 {
             x = Float(self.view.frame.width) - ballSize / 2
-            ballVelocity.x *= -0.5
-            collision = true
+            ballVelocity.x *= -0.8
+            collision_x = true
         }
         var y = ballPosition.y
         if y < ballSize / 2 {
             y = ballSize / 2
-            ballVelocity.y *= -0.5
-            collision = true
+            ballVelocity.y *= -0.8
+            collision_y = true
         } else if y > Float(self.view.frame.height) - ballSize / 2 {
             y = Float(self.view.frame.height) - ballSize / 2
-            ballVelocity.y *= -0.5
-            collision = true
+            ballVelocity.y *= -0.8
+            collision_y = true
         }
         ballPosition = SIMD2<Float>(x, y)
-        if collision != collisioningToWall {
-            updateCollisionState(collisioning: collision)
-            collisioningToWall = collision
+        let ing = collision_x || collision_y
+        let ed = collisioningToWall_x != collision_x || collisioningToWall_y != collision_y
+        if ing && ed {
+            collisionToWall()
         }
+        collisioningToWall_x = collision_x
+        collisioningToWall_y = collision_y
     }
     
     private func setBall(position: SIMD2<Float>) {
