@@ -17,7 +17,8 @@ public class HapticsBoxEngine {
     }
     
     public func play(ahapString: String) {
-        guard let data = ahapString.data(using: .utf8) else { return }
+        guard AHAPParser.parse(ahapString: ahapString) != nil,
+            let data = ahapString.data(using: .utf8) else { return }
         do {
             try engine?.playPattern(from: data)
         } catch let error {

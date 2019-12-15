@@ -14,7 +14,6 @@ class ConnectionViewController: UIViewController {
     @IBOutlet weak var urlField: UITextField!
     @IBOutlet weak var connectButton: UIButton!
     
-    
     private var client: TanuClient!
 
     override func viewDidLoad() {
@@ -25,20 +24,34 @@ class ConnectionViewController: UIViewController {
         client.on(text: { (text: String) in
             HapticsBoxEngine.shared.play(ahapString: text)
         })
-        
+        client.on(connect: {
+            print("on connect ws")
+        })
+        client.on(diconnect: { [weak self] (error: Error?) in
+            print("on disconnect error: \(String(describing: error))")
+            self?.connectButton.setTitle("connect", for: .normal)
+        })
         urlField.text = Configs.macUrl  //input your server url
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.view.addGestureRecognizer(recognizer)
     }
     
-    private func connectWs(url: URL) {
+    private func connect(url: URL) {
+        client.connect(url: url)
+        connectButton.setTitle("disconnect", for: .normal)
+    }
+    
+    private func disconnect() {
+        client.disconnect()
+        connectButton.setTitle("connect", for: .normal)
+    }
+    
+    private func togleConnect(url: URL) {
         if client.isConnected {
-            client.disconnect()
-            connectButton.setTitle("connect", for: .normal)
+            disconnect()
         } else {
-            client.connect(url: url)
-            connectButton.setTitle("disconnect", for: .normal)
+            connect(url: url)
         }
     }
 
@@ -49,12 +62,11 @@ class ConnectionViewController: UIViewController {
 
     @IBAction func utlTextInput(_ sender: Any) {
         if let text = urlField.text, let url = URL(string: text) {
-            connectWs(url: url)
+            togleConnect(url: url)
         }
     }
     
     @objc func tapped() {
         urlField.resignFirstResponder()
-        client.send(text: "hello world")
     }
 }

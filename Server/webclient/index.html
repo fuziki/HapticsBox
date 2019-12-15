@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>tanuroom web client</title>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="tanusan.js"></script>
+  <script type="text/javascript" src="tanuConsole.js"></script>
+  <style type="text/css">
+    .receiveMsgBox {
+        overflow: scroll;
+        height:100px;
+        border:solid 1px #60606060;
+    }
+    </style>
+</head>
+<body>
+  <h1>welcome to tanuroom</h1>
+  room url:
+  <input type="text" id="urlInput" name="url" size="40" value='ws://localhost:8080/tanu'>
+  <input type="button" value="connect" onclick="TanuConsole.shared.create(`urlInput`, `statusLabel`, `receiveMessagesBox`)">
+  <input type="button" value="close" onclick="TanuConsole.shared.closeWsa()">
+  <br>
+status: 
+<span id="statusLabel">not connect</span>
+<br>
+send msg:
+  <input type="text" id="msgInput" name="msg" size="40" value='sample message'>
+  <input type="button" value="send" onclick="TanuConsole.shared.sendMsg(`msgInput`)">
+  <br>
+  receive messages
+  <div id="receiveMessagesBox" class="receiveMsgBox">
+  </div>
+  <br>
+  <br>
+</body>
+</html>

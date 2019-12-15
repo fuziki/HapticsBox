@@ -16,14 +16,18 @@ class TanuClient {
         return socket?.isConnected ?? false
     }
     
-    private var onTextHandler: ((String) -> ())? = nil
-    
+    private var onTextHandler: ((_ text: String) -> ())? = nil
+    private var onConnectHandler: (() -> ())? = nil
+    private var onDisconnectHandler: ((_ error: Error?) -> ())? = nil
+
     public init() {
     }
     
     public func connect(url: URL) {
         let socket = WebSocket(url: url)
         socket.onText = onTextHandler
+        socket.onConnect = onConnectHandler
+        socket.onDisconnect = onDisconnectHandler
         socket.connect()
         self.socket = socket
     }
@@ -33,7 +37,15 @@ class TanuClient {
         socket = nil
     }
     
-    public func on(text handler: @escaping (String) -> ()) {
+    public func on(connect handler: @escaping () -> ()) {
+        onConnectHandler = handler
+    }
+    
+    public func on(diconnect handler: @escaping (_ error: Error?) -> ()) {
+        onDisconnectHandler = handler
+    }
+    
+    public func on(text handler: @escaping (_ text: String) -> ()) {
         onTextHandler = handler
     }
     
