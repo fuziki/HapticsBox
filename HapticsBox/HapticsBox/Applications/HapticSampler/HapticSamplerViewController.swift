@@ -11,8 +11,8 @@ import CoreHaptics
 
 class HapticSamplerViewController: UIViewController {
     
-    let sectionNames = ["play", "nomal player", "advance player"]
-    let ahapFiles = ["Boing", "Gravel", "Inflate", "Oscillate", "Rumble", "Sparkle"]
+    let ahapFiles = [(section: "sample haptics sampler",
+                      cells:["Boing", "Gravel", "Inflate", "Oscillate", "Rumble", "Sparkle"])]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -33,41 +33,10 @@ class HapticSamplerViewController: UIViewController {
         AppController.shared.goHome()
     }
     
-    private var adPlayer: CHHapticAdvancedPatternPlayer?
-    private var lastAdPlayerAHAP: String?
     internal func play(section: String, ahap: String) {
-        if let adPlayer = self.adPlayer, let lastAdPlayerAHAP = self.lastAdPlayerAHAP {
-            try? adPlayer.stop(atTime: 0)
-            self.adPlayer = nil
-            self.lastAdPlayerAHAP = nil
-            if section == sectionNames[2], lastAdPlayerAHAP == ahap {
-                return
-            }
-        }
-        if lastAdPlayerAHAP == ahap {
-            return
-        }
         switch section {
-        case sectionNames[0]:   //play
+        case ahapFiles[0].section:
             HapticsBoxEngine.shared.play(fileName: ahap)
-        case sectionNames[1]:   //nomal player
-            let player = HapticsBoxEngine.shared.makePlayer(fileName: ahap)
-            do {
-                try player?.start(atTime: 0)
-            } catch { // Engine startup errors
-                HBLogger.log("An error occured playing \(error).")
-            }
-        case sectionNames[2]:   //advance player
-            lastAdPlayerAHAP = ahap
-            adPlayer = HapticsBoxEngine.shared.makeAdvancedPlayer(fileName: ahap)
-            adPlayer?.loopEnabled = true
-            adPlayer?.playbackRate = 2
-            adPlayer?.loopEnd = 2
-            do {
-                try adPlayer?.start(atTime: 0)
-            } catch { // Engine startup errors
-                HBLogger.log("An error occured playing \(error).")
-            }
         default:
             break
         }
@@ -76,7 +45,7 @@ class HapticSamplerViewController: UIViewController {
 
 extension HapticSamplerViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = sectionNames[indexPath.section], item = ahapFiles[indexPath.item]
+        let section = ahapFiles[indexPath.section].section, item = ahapFiles[indexPath.section].cells[indexPath.item]
         HBLogger.log("section: \(section), item: \(item)")
         self.play(section: section, ahap: item)
     }
@@ -85,13 +54,13 @@ extension HapticSamplerViewController: UICollectionViewDelegate {
 extension HapticSamplerViewController: UICollectionViewDataSource {
     //number of section
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.sectionNames.count
+        return self.ahapFiles.count
     }
 
     //number of cells
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return self.ahapFiles.count
+        return self.ahapFiles[section].cells.count
     }
     
     //section
@@ -105,7 +74,7 @@ extension HapticSamplerViewController: UICollectionViewDataSource {
         guard let collectionReusableView = reusableView as? CollectionReusableView else {
             return reusableView
         }
-        collectionReusableView.set(labelText: self.sectionNames[indexPath.section])
+        collectionReusableView.set(labelText: self.ahapFiles[indexPath.section].section)
         return collectionReusableView
     }
 
@@ -118,7 +87,7 @@ extension HapticSamplerViewController: UICollectionViewDataSource {
         guard let collectionViewCell = cell as? CollectionViewCell else {
             return cell
         }
-        collectionViewCell.set(labelText: self.ahapFiles[indexPath.item])
+        collectionViewCell.set(labelText: self.ahapFiles[indexPath.section].cells[indexPath.item])
         return collectionViewCell
     }
 }

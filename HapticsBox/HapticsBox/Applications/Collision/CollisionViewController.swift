@@ -49,6 +49,8 @@ class CollisionViewController: UIViewController {
     }
     
     @IBAction func closeView(_ sender: Any) {
+        motionMgr.stopDeviceMotionUpdates()
+        try? boingPlayer.stop(atTime: 0)
         AppController.shared.goHome()
     }
     
