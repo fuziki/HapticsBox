@@ -10,13 +10,35 @@ import Foundation
 import Starscream
 
 class TanuClient {
+    private var socket: WebSocket? = nil
     
-    private var socket: WebSocket?
+    public var isConnected: Bool {
+        return socket?.isConnected ?? false
+    }
     
-    init() {
-        if let url = URL(string: "") {
-            socket = WebSocket(url: url)
-        }
+    private var onTextHandler: ((String) -> ())? = nil
+    
+    public init() {
+    }
+    
+    public func connect(url: URL) {
+        let socket = WebSocket(url: url)
+        socket.onText = onTextHandler
+        socket.connect()
+        self.socket = socket
+    }
+    
+    public func disconnect() {
+        socket?.disconnect()
+        socket = nil
+    }
+    
+    public func on(text handler: @escaping (String) -> ()) {
+        onTextHandler = handler
+    }
+    
+    public func send(text: String) {
+        socket?.write(string: text)
     }
     
 }

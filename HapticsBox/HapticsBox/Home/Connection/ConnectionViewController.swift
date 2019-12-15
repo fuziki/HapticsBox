@@ -12,6 +12,8 @@ import UIKit
 class ConnectionViewController: UIViewController {
     
     @IBOutlet weak var urlField: UITextField!
+    @IBOutlet weak var connectButton: UIButton!
+    
     
     private var client: TanuClient!
 
@@ -20,18 +22,26 @@ class ConnectionViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         client = TanuClient()
+        client.on(text: { (text: String) in
+            print("get text: \(text)")
+        })
+        
+        urlField.text = Configs.macUrl
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.view.addGestureRecognizer(recognizer)
     }
     
     private func connectWs(url: URL) {
-        
+        if client.isConnected {
+            client.disconnect()
+            connectButton.setTitle("connect", for: .normal)
+        } else {
+            client.connect(url: url)
+            connectButton.setTitle("disconnect", for: .normal)
+        }
     }
-    
-    
-    
-    
+
     @IBAction func connect(_ sender: Any) {
         urlField.endEditing(true)
         utlTextInput(self)
@@ -45,5 +55,6 @@ class ConnectionViewController: UIViewController {
     
     @objc func tapped() {
         urlField.resignFirstResponder()
+        client.send(text: "hello world")
     }
 }

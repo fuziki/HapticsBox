@@ -42,6 +42,7 @@
 		523AE09A23A65A76003E7B31 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 523AE09823A65A69003E7B31 /* Starscream.framework */; };
 		523AE09B23A65A76003E7B31 /* Starscream.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 523AE09823A65A69003E7B31 /* Starscream.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		523AE09E23A65A90003E7B31 /* TanuClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AE09D23A65A90003E7B31 /* TanuClient.swift */; };
+		523AE0A023A660B6003E7B31 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AE09F23A660B6003E7B31 /* Configs.swift */; };
 		52479827239942AB00C4EE31 /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52479826239942AB00C4EE31 /* CollectionReusableView.swift */; };
 		52479829239942C300C4EE31 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52479828239942C300C4EE31 /* CollectionViewCell.swift */; };
 		52479831239BA90400C4EE31 /* HeartBeats.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52479830239BA90400C4EE31 /* HeartBeats.storyboard */; };
@@ -113,6 +114,7 @@
 		523AE09523A5FD1B003E7B31 /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		523AE09823A65A69003E7B31 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Starscream.framework; sourceTree = "<group>"; };
 		523AE09D23A65A90003E7B31 /* TanuClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanuClient.swift; sourceTree = "<group>"; };
+		523AE09F23A660B6003E7B31 /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		52479826239942AB00C4EE31 /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
 		52479828239942C300C4EE31 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		52479830239BA90400C4EE31 /* HeartBeats.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HeartBeats.storyboard; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			children = (
 				521014F02389434700858FFE /* AppDelegate.swift */,
 				521014F22389434700858FFE /* SceneDelegate.swift */,
+				523AE09F23A660B6003E7B31 /* Configs.swift */,
 				521014F92389434A00858FFE /* Assets.xcassets */,
 				521014FB2389434A00858FFE /* LaunchScreen.storyboard */,
 				521014FE2389434A00858FFE /* Info.plist */,
@@ -456,6 +459,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52101526238AC1D700858FFE /* HapticsBoxLogger.swift in Sources */,
+				523AE0A023A660B6003E7B31 /* Configs.swift in Sources */,
 				52479827239942AB00C4EE31 /* CollectionReusableView.swift in Sources */,
 				52479829239942C300C4EE31 /* CollectionViewCell.swift in Sources */,
 				523AE06C239E91D6003E7B31 /* CollisionViewController.swift in Sources */,

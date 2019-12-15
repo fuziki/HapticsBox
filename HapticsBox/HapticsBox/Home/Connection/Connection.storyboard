@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vLg-VP-T1E">
-                                <rect key="frame" x="20" y="44" width="309" height="34"/>
+                                <rect key="frame" x="20" y="44" width="374" height="34"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="continue" textContentType="url"/>
@@ -25,7 +25,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGV-HV-X9y">
-                                <rect key="frame" x="337" y="46" width="62" height="30"/>
+                                <rect key="frame" x="291" y="86" width="103" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="connect"/>
                                 <connections>
@@ -37,6 +37,7 @@
                         <viewLayoutGuide key="safeArea" id="YTg-Yb-OEi"/>
                     </view>
                     <connections>
+                        <outlet property="connectButton" destination="zGV-HV-X9y" id="bcO-2X-wUg"/>
                         <outlet property="urlField" destination="vLg-VP-T1E" id="w20-E6-a20"/>
                     </connections>
                 </viewController>
