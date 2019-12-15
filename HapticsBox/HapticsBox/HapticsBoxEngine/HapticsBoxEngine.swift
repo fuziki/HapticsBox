@@ -11,9 +11,18 @@ import CoreHaptics
 public class HapticsBoxEngine {
     public static var shared = HapticsBoxEngine()
     
-    var engine: CHHapticEngine? = nil
+    private var engine: CHHapticEngine? = nil
     private init() {
         startEngine()
+    }
+    
+    public func play(ahapString: String) {
+        guard let data = ahapString.data(using: .utf8) else { return }
+        do {
+            try engine?.playPattern(from: data)
+        } catch let error {
+            HBLogger.log("An error occured playing \(error).")
+        }
     }
     
     public func play(fileName: String, extension ext: String = "ahap") {

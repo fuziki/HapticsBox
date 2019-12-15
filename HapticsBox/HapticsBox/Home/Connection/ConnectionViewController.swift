@@ -23,10 +23,10 @@ class ConnectionViewController: UIViewController {
         
         client = TanuClient()
         client.on(text: { (text: String) in
-            print("get text: \(text)")
+            HapticsBoxEngine.shared.play(ahapString: text)
         })
         
-        urlField.text = Configs.macUrl
+        urlField.text = Configs.macUrl  //input your server url
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.view.addGestureRecognizer(recognizer)
