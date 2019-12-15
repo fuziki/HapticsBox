@@ -54,7 +54,7 @@ class HeartBeatsViewController: UIViewController {
         updateImage(len: len)
         let rate = 2 - len
         heartBeatsPlayer.playbackRate = rate
-        HBLogger.log("face: \(anchor.transform.columns.3.y), rate: \(rate)")
+//        HBLogger.log("face: \(anchor.transform.columns.3.y), rate: \(rate)")
     }
 
     func updateImage(len: Float) {
@@ -76,7 +76,6 @@ class HeartBeatsViewController: UIViewController {
         let num = min(max(number, 1), 4)
         imageView.image = UIImage(named: "HeartBeats00\(num).PNG")
     }
-
     
     @IBAction func closeView(_ sender: Any) {
         AppController.shared.goHome()

@@ -9,19 +9,7 @@
 import UIKit
 import CoreHaptics
 
-class AppController {
-    public static let shared = AppController()
-    private init() {}
-    private var goHomeHandler: (() -> Void)? = nil
-    fileprivate func set(goHomeHandler: (() -> Void)?) {
-        self.goHomeHandler = goHomeHandler
-    }
-    public func goHome() {
-        goHomeHandler?()
-    }
-}
-
-class ViewController: UIViewController {
+class SamplesViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -41,10 +29,6 @@ class ViewController: UIViewController {
                                 withReuseIdentifier: String(describing: CollectionReusableView.self))
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        AppController.shared.set(goHomeHandler: { [weak self] in
-            self?.dismiss(animated: true, completion: nil)
-        })
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,14 +47,14 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UICollectionViewDelegate {
+extension SamplesViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let name = self.storyboardNames[indexPath.section].cells[indexPath.item]
         self.presentViewController(storyboardName: name)
     }
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension SamplesViewController: UICollectionViewDataSource {
     //number of section
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return storyboardNames.count
@@ -111,12 +95,12 @@ extension ViewController: UICollectionViewDataSource {
     }
 }
 
-extension ViewController:  UICollectionViewDelegateFlowLayout {
+extension SamplesViewController:  UICollectionViewDelegateFlowLayout {
     //cell size
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 20, height: 40)
+        return CGSize(width: collectionView.frame.width - 20, height: 60)
     }
     
     //inset size
@@ -138,6 +122,6 @@ extension ViewController:  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: self.view.frame.size.width, height:40)
+        return CGSize(width: self.view.frame.size.width, height:60)
     }
 }

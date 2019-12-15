@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		521014F12389434700858FFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521014F02389434700858FFE /* AppDelegate.swift */; };
 		521014F32389434700858FFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521014F22389434700858FFE /* SceneDelegate.swift */; };
-		521014F52389434700858FFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521014F42389434700858FFE /* ViewController.swift */; };
+		521014F52389434700858FFE /* SamplesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521014F42389434700858FFE /* SamplesViewController.swift */; };
 		521014F82389434700858FFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 521014F62389434700858FFE /* Main.storyboard */; };
 		521014FA2389434A00858FFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 521014F92389434A00858FFE /* Assets.xcassets */; };
 		521014FD2389434A00858FFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 521014FB2389434A00858FFE /* LaunchScreen.storyboard */; };
@@ -35,6 +35,8 @@
 		523AE067239BEA27003E7B31 /* HeartBeats004.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 523AE063239BEA27003E7B31 /* HeartBeats004.PNG */; };
 		523AE06A239E91BF003E7B31 /* Collision.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523AE069239E91BF003E7B31 /* Collision.storyboard */; };
 		523AE06C239E91D6003E7B31 /* CollisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AE06B239E91D6003E7B31 /* CollisionViewController.swift */; };
+		523AE08E23A5F6DF003E7B31 /* Samples.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523AE08D23A5F6DF003E7B31 /* Samples.storyboard */; };
+		523AE09023A5F904003E7B31 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523AE08F23A5F904003E7B31 /* HomeViewController.swift */; };
 		52479827239942AB00C4EE31 /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52479826239942AB00C4EE31 /* CollectionReusableView.swift */; };
 		52479829239942C300C4EE31 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52479828239942C300C4EE31 /* CollectionViewCell.swift */; };
 		52479831239BA90400C4EE31 /* HeartBeats.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52479830239BA90400C4EE31 /* HeartBeats.storyboard */; };
@@ -57,7 +59,7 @@
 		521014ED2389434700858FFE /* HapticsBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HapticsBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		521014F02389434700858FFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		521014F22389434700858FFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		521014F42389434700858FFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		521014F42389434700858FFE /* SamplesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplesViewController.swift; sourceTree = "<group>"; };
 		521014F72389434700858FFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		521014F92389434A00858FFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		521014FC2389434A00858FFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -86,6 +88,8 @@
 		523AE063239BEA27003E7B31 /* HeartBeats004.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HeartBeats004.PNG; sourceTree = "<group>"; };
 		523AE069239E91BF003E7B31 /* Collision.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Collision.storyboard; sourceTree = "<group>"; };
 		523AE06B239E91D6003E7B31 /* CollisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionViewController.swift; sourceTree = "<group>"; };
+		523AE08D23A5F6DF003E7B31 /* Samples.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Samples.storyboard; sourceTree = "<group>"; };
+		523AE08F23A5F904003E7B31 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		52479826239942AB00C4EE31 /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
 		52479828239942C300C4EE31 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		52479830239BA90400C4EE31 /* HeartBeats.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HeartBeats.storyboard; sourceTree = "<group>"; };
@@ -207,13 +211,23 @@
 			path = Collision;
 			sourceTree = "<group>";
 		};
+		523AE09123A5FB7B003E7B31 /* Samples */ = {
+			isa = PBXGroup;
+			children = (
+				523AE08D23A5F6DF003E7B31 /* Samples.storyboard */,
+				521014F42389434700858FFE /* SamplesViewController.swift */,
+				52479826239942AB00C4EE31 /* CollectionReusableView.swift */,
+				52479828239942C300C4EE31 /* CollectionViewCell.swift */,
+			);
+			path = Samples;
+			sourceTree = "<group>";
+		};
 		5247982A239B793000C4EE31 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				521014F62389434700858FFE /* Main.storyboard */,
-				521014F42389434700858FFE /* ViewController.swift */,
-				52479826239942AB00C4EE31 /* CollectionReusableView.swift */,
-				52479828239942C300C4EE31 /* CollectionViewCell.swift */,
+				523AE08F23A5F904003E7B31 /* HomeViewController.swift */,
+				523AE09123A5FB7B003E7B31 /* Samples */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -367,6 +381,7 @@
 				523AE064239BEA27003E7B31 /* HeartBeats003.PNG in Resources */,
 				5210151F23897E3000858FFE /* OnceHeartbeat.ahap in Resources */,
 				523AE06A239E91BF003E7B31 /* Collision.storyboard in Resources */,
+				523AE08E23A5F6DF003E7B31 /* Samples.storyboard in Resources */,
 				521014F82389434700858FFE /* Main.storyboard in Resources */,
 				52101531238AD2F500858FFE /* Inflate.ahap in Resources */,
 				523AE067239BEA27003E7B31 /* HeartBeats004.PNG in Resources */,
@@ -398,13 +413,14 @@
 				52479827239942AB00C4EE31 /* CollectionReusableView.swift in Sources */,
 				52479829239942C300C4EE31 /* CollectionViewCell.swift in Sources */,
 				523AE06C239E91D6003E7B31 /* CollisionViewController.swift in Sources */,
-				521014F52389434700858FFE /* ViewController.swift in Sources */,
+				521014F52389434700858FFE /* SamplesViewController.swift in Sources */,
 				521014F12389434700858FFE /* AppDelegate.swift in Sources */,
 				52479833239BA96C00C4EE31 /* HeartBeatsViewController.swift in Sources */,
 				52479838239BB53B00C4EE31 /* HapticSamplerViewController.swift in Sources */,
 				52101522238984B300858FFE /* AHAPParser.swift in Sources */,
 				52101528238ACB3400858FFE /* HapticsBoxEngine.swift in Sources */,
 				521014F32389434700858FFE /* SceneDelegate.swift in Sources */,
+				523AE09023A5F904003E7B31 /* HomeViewController.swift in Sources */,
 				52101524238A734500858FFE /* FileLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

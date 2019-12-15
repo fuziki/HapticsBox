@@ -10,7 +10,6 @@ import UIKit
 import CoreHaptics
 
 class HapticSamplerViewController: UIViewController {
-    
     let ahapFiles = [(section: "sample haptics sampler",
                       cells:["Boing", "Gravel", "Inflate", "Oscillate", "Rumble", "Sparkle"])]
     
@@ -97,7 +96,7 @@ extension HapticSamplerViewController:  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 20, height: 40)
+        return CGSize(width: collectionView.frame.width - 20, height: 60)
     }
     
     //inset size
@@ -119,6 +118,6 @@ extension HapticSamplerViewController:  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: self.view.frame.size.width, height:40)
+        return CGSize(width: self.view.frame.size.width, height:60)
     }
 }
