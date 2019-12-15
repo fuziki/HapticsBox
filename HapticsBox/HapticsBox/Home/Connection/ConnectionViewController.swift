@@ -12,10 +12,14 @@ import UIKit
 class ConnectionViewController: UIViewController {
     
     @IBOutlet weak var urlField: UITextField!
+    
+    private var client: TanuClient!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        client = TanuClient()
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.view.addGestureRecognizer(recognizer)
