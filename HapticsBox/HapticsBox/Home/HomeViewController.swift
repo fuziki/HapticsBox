@@ -23,13 +23,6 @@ class AppController {
 
 class HomeViewController: UIViewController {
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    let storyboardNames = [(section: "Applications",
-                            cells: ["HapticSampler", "HeartBeats", "Collision"])]
-    
-    private var audioTransitionStoryboard: String? = nil
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
