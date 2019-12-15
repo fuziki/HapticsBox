@@ -1,7 +1,7 @@
 .DS_Store
 UserInterfaceState.xcuserstate
 
-HapticsBox/HapticsBox/App/Configs.swift
+Configs.swift
 
 Carthage/Checkouts
 !Carthage/Build
