@@ -7,13 +7,14 @@
 //
 
 import Foundation
-import Starscream
+//import Starscream
 
 class TanuClient {
-    private var socket: WebSocket? = nil
+//    private var socket: WebSocket? = nil
     
     public var isConnected: Bool {
-        return socket?.isConnected ?? false
+//        return socket?.isConnected ?? false
+        return false
     }
     
     private var onTextHandler: ((_ text: String) -> ())? = nil
@@ -24,17 +25,17 @@ class TanuClient {
     }
     
     public func connect(url: URL) {
-        let socket = WebSocket(url: url)
-        socket.onText = onTextHandler
-        socket.onConnect = onConnectHandler
-        socket.onDisconnect = onDisconnectHandler
-        socket.connect()
-        self.socket = socket
+//        let socket = WebSocket(url: url)
+//        socket.onText = onTextHandler
+//        socket.onConnect = onConnectHandler
+//        socket.onDisconnect = onDisconnectHandler
+//        socket.connect()
+//        self.socket = socket
     }
     
     public func disconnect() {
-        socket?.disconnect()
-        socket = nil
+//        socket?.disconnect()
+//        socket = nil
     }
     
     public func on(connect handler: @escaping () -> ()) {
@@ -50,7 +51,7 @@ class TanuClient {
     }
     
     public func send(text: String) {
-        socket?.write(string: text)
+//        socket?.write(string: text)
     }
     
 }

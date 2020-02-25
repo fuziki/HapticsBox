@@ -1,95 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>tanuroom web client</title>
-  <meta charset="UTF-8">
-  <script type="text/javascript" src="tanusan.js"></script>
-  <script type="text/javascript" src="tanuConsole.js"></script>
-  <style type="text/css">
-    .receiveMsgBox {
-        overflow: scroll;
-        height:100px;
-        border:solid 1px #60606060;
-    }
-    </style>
-</head>
-<body>
-  <h1>welcome to tanuroom</h1>
-  room url:
-  <input type="text" id="urlInput" name="url" size="40" value='ws://localhost:8080/tanu'>
-  <input type="button" value="connect" onclick="TanuConsole.shared.create(`urlInput`, `statusLabel`)">
-  <input type="button" value="close" onclick="TanuConsole.shared.closeWsa()">
-  <br>
-status: 
-<span id="statusLabel">not connect</span>
-<br>
-send msg:
-  <input type="button" value="send" onclick="TanuConsole.shared.sendMsg(`msgInput`)">
-  <br>
-  <textarea id="msgInput" name="msg" rows="40" value='sample message' style="width:100%">
-{
-  "Version": 1.0,
-  "Metadata":
-      {
-          "Project" : "Haptic Sampler",
-          "Created" : "5 June 2019",
-          "Description" : "A continuous event tweaked by sloped parameter curves, emphasized by a precisely placed transient event, creating the feeling of a spring or rubberband."
-      },
-  "Pattern":
-  [
-      {
-          "Event":
-          {
-              "Time": 0.0,
-              "EventType": "HapticTransient",
-              "EventParameters":
-              [
-                  { "ParameterID": "HapticIntensity", "ParameterValue": 0.8 },
-                  { "ParameterID": "HapticSharpness", "ParameterValue": 0.4 }
-              ]
-          }
-      },
-      {
-          "Event":
-          {
-              "Time": 0.015,
-              "EventType": "HapticContinuous",
-              "EventDuration": 0.25,
-              "EventParameters":
-              [
-                  { "ParameterID": "HapticIntensity", "ParameterValue": 0.8 },
-                  { "ParameterID": "HapticSharpness", "ParameterValue": 0.4 }
-              ]
-          }
-      },
-      {
-          "ParameterCurve":
-          {
-              "ParameterID": "HapticIntensityControl",
-              "Time": 0.015,
-              "ParameterCurveControlPoints":
-              [
-                  { "Time": 0, "ParameterValue": 1 },
-                  { "Time": 0.1, "ParameterValue": 0.5 },
-                  { "Time": 0.25, "ParameterValue": 0.0 }
-              ]
-          }
-      },
-      {
-          "ParameterCurve":
-          {
-              "ParameterID": "HapticSharpnessControl",
-              "Time": 0.015,
-              "ParameterCurveControlPoints":
-              [
-                  { "Time": 0, "ParameterValue": 0.0 },
-                  { "Time": 0.25, "ParameterValue": -0.3 }
-              ]
-          }
-      }
-  ]
-}    
-  </textarea>
-  <br>
-</body>
+  <head>
+    <title>canvas tutorial</title>
+    <meta charset="UTF-8" />
+    <script type="module" src="./index.js"></script>
+  </head>
+  <body>
+    <canvas id="canvas" width="640" height="360"></canvas>
+    <input type="text" id="urlInput" name="url" size="40" value='ws://192.168.11.9:8080/haptic'>
+    <input type="button" id="connectButton" value="connect">
+    <input type="button" id="closeButton" value="close">
+    <input type="button" id="sendButton" value="send">
+    <textarea id="textarea" rows="40" style="width:100%">   
+    </textarea>
+  </body>
 </html>
