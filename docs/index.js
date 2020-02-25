@@ -99,6 +99,20 @@ function draw() {
     context.fill();
     context.stroke();
   }
+  context.font = "20px"
+  context.fillStyle="black";
+  context.fillText("intensity", 0, 20);
+  context.fillText("sharpness", 0, canvas.height / 2 + 20);
+  context.fillText("0.0sec", 0, canvas.height / 2 - 3);
+  context.fillText("1.0sec", canvas.width / 4 - 10, canvas.height / 2- 3);
+  context.fillText("2.0sec", canvas.width / 2 - 10, canvas.height / 2 - 3);
+  context.fillText("3.0sec", canvas.width * 3 / 4 - 10, canvas.height / 2 - 3);
+  context.fillText("4.0sec", canvas.width - 30, canvas.height / 2- 3);
+  context.fillText("0.0sec", 0, canvas.height - 3);
+  context.fillText("1.0sec", canvas.width / 4 - 10, canvas.height- 3);
+  context.fillText("2.0sec", canvas.width / 2 - 10, canvas.height - 3);
+  context.fillText("3.0sec", canvas.width * 3 / 4 - 10, canvas.height - 3);
+  context.fillText("4.0sec", canvas.width - 30, canvas.height - 3);
   textarea.value = JSON.stringify(canvasViewModel.json());
 }
 
