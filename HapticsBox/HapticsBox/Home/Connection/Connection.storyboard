@@ -24,11 +24,20 @@
                                     <action selector="utlTextInput:" destination="nSq-oa-Hly" eventType="editingDidEndOnExit" id="vcw-Ua-Tza"/>
                                 </connections>
                             </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8OK-p7-pta">
+                                <rect key="frame" x="20" y="86" width="374" height="810"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="YTg-Yb-OEi"/>
                     </view>
                     <connections>
+                        <outlet property="textView" destination="8OK-p7-pta" id="Sru-OQ-KMQ"/>
                         <outlet property="urlField" destination="vLg-VP-T1E" id="w20-E6-a20"/>
                     </connections>
                 </viewController>
