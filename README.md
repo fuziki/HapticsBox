@@ -2,7 +2,9 @@
 
 Haptics Engine Samples
 
+# Web console
+[https://fuziki.github.io/HapticsBox/](https://fuziki.github.io/HapticsBox/)
 
 # Dependency Libraries
-## [Starscream](https://github.com/daltoniam/Starscream)
-[Apache License Version 2.0](https://github.com/daltoniam/Starscream/blob/master/LICENSE)
+## [Swifter](https://github.com/httpswift/swifter)
+BSD 3-Clause
