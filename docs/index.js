@@ -4,6 +4,10 @@ onload = function() {
     init();
 };
 
+shortcut.add("Shift+S",function() {
+  sendWs();
+});
+
 var canvas
 var context
 var canvasViewModel
