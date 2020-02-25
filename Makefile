@@ -1,2 +1,2 @@
 s:
-	cd Server && go run *.go
+	cd docs && go run *.go

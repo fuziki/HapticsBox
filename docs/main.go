@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/webclient/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, r.URL.Path[1:])
 	})
 
@@ -14,5 +14,5 @@ func main() {
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
-	log.Println("web client: http://localhost:8080/webclient")
+	log.Println("web client: http://localhost:8080/")
 }
