@@ -48,6 +48,7 @@ export class EventParametersGraph {
     this.tmpHaptic = null;
     this.draggingHaptic = null;
     this.hasUpdate = false;
+    this.enabeleDeleteMode = false;
   }
 
   onDown(canvas_x, canvas_y) {
@@ -63,13 +64,24 @@ export class EventParametersGraph {
       let x = haptic.time * config.pxPerSec + config.origin.x;
       let y = config.origin.y + config.size.y - haptic.values[graph] * config.pxPerValue;
       let d1 = Math.sqrt(Math.pow(canvas_x - x, 2) + Math.pow(canvas_y - y, 2));
+      let d2 = Math.sqrt(Math.pow(canvas_x - x - w, 2) + Math.pow(canvas_y - y, 2));
+      if (this.enabeleDeleteMode) {
+        if (d1 < 7 || d2 < 7) {
+          var index = this.haptics.continuous.indexOf(haptic);
+          if(index >= 0){
+            this.haptics.continuous.splice(index, 1); 
+          }
+          this.hasUpdate = true;
+          return;
+        }
+        continue;
+      }
       if (d1 < 7) {
         haptic.time += haptic.duration;
         haptic.duration = -1 * haptic.duration;
         this.draggingHaptic = haptic;
         return;
       }
-      let d2 = Math.sqrt(Math.pow(canvas_x - x - w, 2) + Math.pow(canvas_y - y, 2));
       if (d2 < 7) {
         this.draggingHaptic = haptic;
         return;
@@ -82,10 +94,20 @@ export class EventParametersGraph {
       let y = config.origin.y + config.size.y - haptic.values[graph] * config.pxPerValue;
       let d1 = Math.sqrt(Math.pow(canvas_x - x, 2) + Math.pow(canvas_y - y, 2));
       if (d1 < 7) {
-        this.draggingHaptic = haptic;
+        if (this.enabeleDeleteMode) {
+          var index = this.haptics.transient.indexOf(haptic);
+          if(index >= 0){
+            this.haptics.transient.splice(index, 1); 
+          }
+          this.hasUpdate = true;
+        } else {
+          this.draggingHaptic = haptic;
+        }
         return;
       }
     }
+
+    if (this.enabeleDeleteMode) { return; }
 
     const config = this.graphConfigs[graph];
     const x = (canvas_x - config.origin.x) / config.pxPerSec;

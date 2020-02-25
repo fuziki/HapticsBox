@@ -14,6 +14,12 @@ export class CanvasViewModel {
     this.drawCircles = [];
 
     this.shouldDraw = false;
+    this.enabeleDeleteMode = false;
+  }
+
+  toggledDleteMode() {
+    this.enabeleDeleteMode = !this.enabeleDeleteMode;
+    this.eventParametersGraph.enabeleDeleteMode = this.enabeleDeleteMode;
   }
 
   onDown(x, y) {

@@ -10,7 +10,6 @@ var canvasViewModel
 var textarea
 var urlInput
 var ws
-var enabeleDeleteMode = false;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -136,6 +135,6 @@ function sendWs() {
 }
 
 function toggledDleteMode() {
-  enabeleDeleteMode = !enabeleDeleteMode;
-  document.getElementById('modeButton').value = enabeleDeleteMode ? "delete mode: on" : "delete mode: off";
+  canvasViewModel.toggledDleteMode();
+  document.getElementById('modeButton').value = canvasViewModel.enabeleDeleteMode ? "delete mode: on" : "delete mode: off";
 }
