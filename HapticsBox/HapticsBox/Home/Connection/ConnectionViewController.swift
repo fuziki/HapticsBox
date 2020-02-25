@@ -14,56 +14,23 @@ class ConnectionViewController: UIViewController {
     @IBOutlet weak var urlField: UITextField!
     @IBOutlet weak var connectButton: UIButton!
     
-    private var client: TanuClient!
+    private var server: WebSocketServer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        client = TanuClient()
-        client.on(text: { (text: String) in
+        server = WebSocketServer()
+        server.on(text: { (text: String) in
             HapticsBoxEngine.shared.play(ahapString: text)
-        })
-        client.on(connect: {
-            print("on connect ws")
-        })
-        client.on(diconnect: { [weak self] (error: Error?) in
-            print("on disconnect error: \(String(describing: error))")
-            self?.connectButton.setTitle("connect", for: .normal)
         })
         urlField.text = Configs.macUrl  //input your server url
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.view.addGestureRecognizer(recognizer)
     }
-    
-    private func connect(url: URL) {
-        client.connect(url: url)
-        connectButton.setTitle("disconnect", for: .normal)
-    }
-    
-    private func disconnect() {
-        client.disconnect()
-        connectButton.setTitle("connect", for: .normal)
-    }
-    
-    private func togleConnect(url: URL) {
-        if client.isConnected {
-            disconnect()
-        } else {
-            connect(url: url)
-        }
-    }
-
-    @IBAction func connect(_ sender: Any) {
-        urlField.endEditing(true)
-        utlTextInput(self)
-    }
 
     @IBAction func utlTextInput(_ sender: Any) {
-        if let text = urlField.text, let url = URL(string: text) {
-            togleConnect(url: url)
-        }
     }
     
     @objc func tapped() {
