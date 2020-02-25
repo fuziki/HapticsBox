@@ -10,6 +10,7 @@ var canvasViewModel
 var textarea
 var urlInput
 var ws
+var enabeleDeleteMode = false;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -29,6 +30,7 @@ function init() {
     document.getElementById('connectButton').addEventListener('click', connectWs, false);
     document.getElementById('closeButton').addEventListener('click', closeWs, false);
     document.getElementById('sendButton').addEventListener('click', sendWs, false);
+    document.getElementById('modeButton').addEventListener('click', toggledDleteMode, false);
 
     draw();
 }
@@ -131,4 +133,9 @@ function sendWs() {
   console.log("send", textarea.value);
   if (ws == null) { return; }
   ws.send(textarea.value);
+}
+
+function toggledDleteMode() {
+  enabeleDeleteMode = !enabeleDeleteMode;
+  document.getElementById('modeButton').value = enabeleDeleteMode ? "delete mode: on" : "delete mode: off";
 }
