@@ -27,7 +27,7 @@ class ConnectionViewController: UIViewController {
                 self?.textView.text = text
             }
         })
-        urlField.text = "ws://192.168.11.9:8080/haptic"
+        urlField.text = "ws://192.168.11.9:8080/haptic" //set your ip address
         
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
         self.view.addGestureRecognizer(recognizer)
