@@ -72,16 +72,14 @@ function onUp(e) {
 function draw() {
   context.strokeStyle="black"
   context.fillStyle="lightgray";
+  let intensityEventBaseLine = canvas.height / 4;
+  let sharpnessEventBaseLine = canvas.height / 4 * 2;
+  let intensityCurveBaseLine = canvas.height / 4 * 3;
+  let sharpnessCurveBaseLine = canvas.height / 4 * 4;
+  let baseLines = [intensityEventBaseLine, sharpnessEventBaseLine, intensityCurveBaseLine, sharpnessCurveBaseLine];
+
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.beginPath();
-  context.moveTo(0, canvas.height / 2);
-  context.lineTo(canvas.width, canvas.height / 2);
-  context.stroke();
-  context.beginPath();
-  context.moveTo(0, canvas.height);
-  context.lineTo(canvas.width, canvas.height);
-  context.stroke();
 
   for (let rect of canvasViewModel.drawRects) {
     context.strokeStyle="black"
@@ -96,6 +94,16 @@ function draw() {
     context.lineTo(line.end.x, line.end.y);
     context.stroke();
   }
+
+  for (let stridPoints of canvasViewModel.drawStrideLines) {
+    context.beginPath();
+    context.moveTo(stridPoints[0].x, stridPoints[0].y);
+    for(var i = 0; i < stridPoints.length; i++) {
+      context.lineTo(stridPoints[i].x, stridPoints[i].y);
+    }
+    context.stroke();
+  }
+
   for (let circle of canvasViewModel.drawCircles) {
     context.strokeStyle="black"
     context.fillStyle="white";
@@ -104,20 +112,27 @@ function draw() {
     context.fill();
     context.stroke();
   }
+
   context.font = "20px"
   context.fillStyle="black";
-  context.fillText("intensity", 0, 20);
-  context.fillText("sharpness", 0, canvas.height / 2 + 20);
-  context.fillText("0.0sec", 0, canvas.height / 2 - 3);
-  context.fillText("1.0sec", canvas.width / 4 - 10, canvas.height / 2- 3);
-  context.fillText("2.0sec", canvas.width / 2 - 10, canvas.height / 2 - 3);
-  context.fillText("3.0sec", canvas.width * 3 / 4 - 10, canvas.height / 2 - 3);
-  context.fillText("4.0sec", canvas.width - 30, canvas.height / 2- 3);
-  context.fillText("0.0sec", 0, canvas.height - 3);
-  context.fillText("1.0sec", canvas.width / 4 - 10, canvas.height- 3);
-  context.fillText("2.0sec", canvas.width / 2 - 10, canvas.height - 3);
-  context.fillText("3.0sec", canvas.width * 3 / 4 - 10, canvas.height - 3);
-  context.fillText("4.0sec", canvas.width - 30, canvas.height - 3);
+
+  for (let line of baseLines) {
+    context.beginPath();
+    context.moveTo(0, line);
+    context.lineTo(canvas.width, line);
+    context.stroke();
+    context.fillText("0.0sec", 0, line - 3);
+    context.fillText("1.0sec", canvas.width / 4 - 20, line - 3);
+    context.fillText("2.0sec", canvas.width / 2 - 20, line - 3);
+    context.fillText("3.0sec", canvas.width * 3 / 4 - 20, line - 3);
+    context.fillText("4.0sec", canvas.width - 35, line - 3);
+  }
+
+  context.fillText("event intensity", 5, intensityEventBaseLine - canvas.height / 4 + 15);
+  context.fillText("event sharpness", 5, sharpnessEventBaseLine - canvas.height / 4 + 15);
+  context.fillText("curve intensity", 5, intensityCurveBaseLine - canvas.height / 4 + 15);
+  context.fillText("curve sharpness", 5, sharpnessCurveBaseLine - canvas.height / 4 + 15);
+
   textarea.value = JSON.stringify(canvasViewModel.json());
 }
 
