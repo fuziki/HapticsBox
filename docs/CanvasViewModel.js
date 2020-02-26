@@ -5,8 +5,8 @@ export class CanvasViewModel {
   constructor(canvas) {
     this.canvas = canvas;
 
-    const intensityGraphConfigs = new GraphConfigs(new Vector2(0, 0), new Vector2(canvas.width, canvas.height / 2), 200, 180);
-    const sharpnessGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 2), new Vector2(canvas.width, canvas.height / 2), 200, 180);
+    const intensityGraphConfigs = new GraphConfigs(new Vector2(0, 0), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
+    const sharpnessGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
     this.eventParametersGraph = new EventParametersGraph(intensityGraphConfigs, sharpnessGraphConfigs);
 
     this.drawRects = [];
