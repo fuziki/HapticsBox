@@ -20,8 +20,8 @@ export class ControlPoint {
 export class CurveParametersGraph {
   constructor(intensityGraphConfigs, sharpnessGraphConfigs) {
     this.graphConfigs = { intensity: intensityGraphConfigs, sharpness: sharpnessGraphConfigs, };
-    this.haptics = { continuous: [], transient: [] };
-    this.tmpHaptic = null;
+    this.controlPoint = { intensity: [], sharpness: [] };
+
     this.draggingHaptic = null;
     this.hasUpdate = false;
     this.enabeleDeleteMode = false;

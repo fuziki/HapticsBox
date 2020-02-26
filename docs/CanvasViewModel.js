@@ -1,5 +1,6 @@
 import { Vector2, Rect, Line, Circle } from "./Utils.js";
 import { GraphConfigs, EventParametersGraph } from "./EventParametersGraph.js";
+import { CurveParametersGraph } from "./CurveParametersGraph.js";
 
 export class CanvasViewModel {
   constructor(canvas) {
@@ -8,6 +9,10 @@ export class CanvasViewModel {
     const intensityGraphConfigs = new GraphConfigs(new Vector2(0, 0), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
     const sharpnessGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
     this.eventParametersGraph = new EventParametersGraph(intensityGraphConfigs, sharpnessGraphConfigs);
+
+    const intensityCurveGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4 * 2), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
+    const sharpnessCurveGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4 * 3), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
+    this.eventParametersGraph = new CurveParametersGraph(intensityCurveGraphConfigs, sharpnessCurveGraphConfigs);
 
     this.drawRects = [];
     this.drawLines = [];
