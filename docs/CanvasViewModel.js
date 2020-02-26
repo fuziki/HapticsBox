@@ -12,7 +12,7 @@ export class CanvasViewModel {
 
     const intensityCurveGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4 * 2), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
     const sharpnessCurveGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4 * 3), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
-    this.eventParametersGraph = new CurveParametersGraph(intensityCurveGraphConfigs, sharpnessCurveGraphConfigs);
+    this.curveParametersGraph = new CurveParametersGraph(intensityCurveGraphConfigs, sharpnessCurveGraphConfigs);
 
     this.drawRects = [];
     this.drawLines = [];
@@ -25,11 +25,16 @@ export class CanvasViewModel {
   toggledDleteMode() {
     this.enabeleDeleteMode = !this.enabeleDeleteMode;
     this.eventParametersGraph.enabeleDeleteMode = this.enabeleDeleteMode;
+    this.curveParametersGraph.enabeleDeleteMode = this.enabeleDeleteMode;
   }
 
   onDown(x, y) {
     this.eventParametersGraph.onDown(x, y);
     if(this.eventParametersGraph.hasUpdate) {
+      this.draw();
+    }
+    this.curveParametersGraph.onDown(x, y);
+    if(this.curveParametersGraph.hasUpdate) {
       this.draw();
     }
   }
@@ -39,11 +44,19 @@ export class CanvasViewModel {
     if(this.eventParametersGraph.hasUpdate) {
       this.draw();
     }
+    this.curveParametersGraph.onMove(x, y);
+    if(this.curveParametersGraph.hasUpdate) {
+      this.draw();
+    }
   }
 
   onUp() {
     this.eventParametersGraph.onUp();
     if(this.eventParametersGraph.hasUpdate) {
+      this.draw();
+    }
+    this.curveParametersGraph.onUp();
+    if(this.curveParametersGraph.hasUpdate) {
       this.draw();
     }
   }
@@ -91,6 +104,15 @@ export class CanvasViewModel {
         this.drawCircles.push(new Circle(new Vector2(x, y), 7));
       }
     }
+
+    for (let [key, config] of Object.entries(this.curveParametersGraph.graphConfigs)) {
+      for(let point of this.curveParametersGraph.controlPoints[key]) {
+        let x = point.time * config.pxPerSec + config.origin.x;
+        let y = config.origin.y + config.size.y - point.value * config.pxPerValue;
+        this.drawCircles.push(new Circle(new Vector2(x, y), 7));
+      }
+    }
+
     this.shouldDraw = true;
   }
 }

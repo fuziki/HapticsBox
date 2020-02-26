@@ -20,9 +20,9 @@ export class ControlPoint {
 export class CurveParametersGraph {
   constructor(intensityGraphConfigs, sharpnessGraphConfigs) {
     this.graphConfigs = { intensity: intensityGraphConfigs, sharpness: sharpnessGraphConfigs, };
-    this.controlPoint = { intensity: [], sharpness: [] };
+    this.controlPoints = { intensity: [], sharpness: [] };
 
-    this.draggingHaptic = null;
+    this.draggingPoint = null;
     this.hasUpdate = false;
     this.enabeleDeleteMode = false;
   }
@@ -34,50 +34,20 @@ export class CurveParametersGraph {
     const graph = this.targetGraph(canvas_x, canvas_y);
     if (graph == "") { return; }
 
-    for (let haptic of this.haptics.continuous) {
-      let config = this.graphConfigs[graph];
-      let w = haptic.duration * config.pxPerSec;
-      let x = haptic.time * config.pxPerSec + config.origin.x;
-      let y = config.origin.y + config.size.y - haptic.values[graph] * config.pxPerValue;
-      let d1 = Math.sqrt(Math.pow(canvas_x - x, 2) + Math.pow(canvas_y - y, 2));
-      let d2 = Math.sqrt(Math.pow(canvas_x - x - w, 2) + Math.pow(canvas_y - y, 2));
-      if (this.enabeleDeleteMode) {
-        if (d1 < 7 || d2 < 7) {
-          var index = this.haptics.continuous.indexOf(haptic);
-          if(index >= 0){
-            this.haptics.continuous.splice(index, 1); 
-          }
-          this.hasUpdate = true;
-          return;
-        }
-        continue;
-      }
-      if (d1 < 7) {
-        haptic.time += haptic.duration;
-        haptic.duration = -1 * haptic.duration;
-        this.draggingHaptic = haptic;
-        return;
-      }
-      if (d2 < 7) {
-        this.draggingHaptic = haptic;
-        return;
-      }
-    }
-
-    for (let haptic of this.haptics.transient) {
-      let config = this.graphConfigs[graph];
-      let x = haptic.time * config.pxPerSec + config.origin.x;
-      let y = config.origin.y + config.size.y - haptic.values[graph] * config.pxPerValue;
-      let d1 = Math.sqrt(Math.pow(canvas_x - x, 2) + Math.pow(canvas_y - y, 2));
-      if (d1 < 7) {
+    let config = this.graphConfigs[graph];
+    for (let point of this.controlPoints[graph]) {
+      let x = point.time * config.pxPerSec + config.origin.x;
+      let y = config.origin.y + config.size.y - point.value * config.pxPerValue;
+      let d = Math.sqrt(Math.pow(canvas_x - x, 2) + Math.pow(canvas_y - y, 2));
+      if (d < 7) {
         if (this.enabeleDeleteMode) {
-          var index = this.haptics.transient.indexOf(haptic);
+          var index = this.controlPoints[graph].indexOf(point);
           if(index >= 0){
-            this.haptics.transient.splice(index, 1); 
+            this.controlPoints[graph].splice(index, 1); 
           }
           this.hasUpdate = true;
         } else {
-          this.draggingHaptic = haptic;
+          this.draggingPoint = point;
         }
         return;
       }
@@ -85,15 +55,15 @@ export class CurveParametersGraph {
 
     if (this.enabeleDeleteMode) { return; }
 
-    const config = this.graphConfigs[graph];
     const x = (canvas_x - config.origin.x) / config.pxPerSec;
     const y = (config.origin.y + config.size.y - canvas_y) / config.pxPerValue;
-    this.tmpHaptic = new ContinuousHaptic(x, 0, y, y);
-    this.draggingHaptic = this.tmpHaptic;
+    this.draggingPoint = new ControlPoint(x, y);
+    this.controlPoints[graph].push(this.draggingPoint);
     this.hasUpdate = true;
   }
 
   onMove(canvas_x, canvas_y) {
+    return;
     this.hasUpdate = false;
     const graph = this.targetGraph(canvas_x, canvas_y);
     if (graph == "") { return; }
@@ -120,6 +90,7 @@ export class CurveParametersGraph {
   }
 
   onUp() {
+    return;
     this.hasUpdate = false;
     this.draggingHaptic = null;
 
