@@ -8,9 +8,10 @@ export class GraphConfigs {
 }
 
 export class ControlPoint {
-  constructor(time, value) {
+  constructor(time, value, timeConstraint = false) {
     this.time = time;
     this.value = value;
+    this.timeConstraint = timeConstraint;
   }
   json() {
     return { Time: this.time, ParameterValue: this.value };
@@ -21,9 +22,13 @@ export class CurveParametersGraph {
   constructor(intensityGraphConfigs, sharpnessGraphConfigs) {
     this.graphConfigs = { intensity: intensityGraphConfigs, sharpness: sharpnessGraphConfigs, };
     this.controlPoints = { intensity: [], sharpness: [] };
+    this.controlPoints.intensity.push(new ControlPoint(0, 1, true));
+    this.controlPoints.intensity.push(new ControlPoint(4, 1, true));
+    this.controlPoints.sharpness.push(new ControlPoint(0, 1, true));
+    this.controlPoints.sharpness.push(new ControlPoint(4, 1, true));
 
     this.draggingPoint = null;
-    this.hasUpdate = false;
+    this.hasUpdate = true;
     this.enabeleDeleteMode = false;
   }
 
@@ -39,8 +44,9 @@ export class CurveParametersGraph {
       let x = point.time * config.pxPerSec + config.origin.x;
       let y = config.origin.y + config.size.y - point.value * config.pxPerValue;
       let d = Math.sqrt(Math.pow(canvas_x - x, 2) + Math.pow(canvas_y - y, 2));
-      if (d < 7) {
+      if (d < 14) {
         if (this.enabeleDeleteMode) {
+          if (point.timeConstraint) { return; }
           var index = this.controlPoints[graph].indexOf(point);
           if(index >= 0){
             this.controlPoints[graph].splice(index, 1); 
@@ -60,15 +66,15 @@ export class CurveParametersGraph {
     this.draggingPoint = new ControlPoint(x, y);
     this.controlPoints[graph].push(this.draggingPoint);
     this.hasUpdate = true;
+    this.sort(graph);
   }
 
   onMove(canvas_x, canvas_y) {
-    return;
     this.hasUpdate = false;
     const graph = this.targetGraph(canvas_x, canvas_y);
     if (graph == "") { return; }
 
-    if (this.draggingHaptic == null) {
+    if (this.draggingPoint == null) {
       return;
     }
     this.hasUpdate = true;
@@ -76,33 +82,22 @@ export class CurveParametersGraph {
     const config = this.graphConfigs[graph];
     const x = (canvas_x - config.origin.x) / config.pxPerSec;
     const y = (config.size.y - (canvas_y - config.origin.y)) / config.pxPerValue;
-    if (this.draggingHaptic.constructor.name == "ContinuousHaptic") {
-      this.draggingHaptic.duration = x - this.draggingHaptic.time;
-    } else {
-      this.draggingHaptic.time = x;
+    if (!this.draggingPoint.timeConstraint) {
+      this.draggingPoint.time = x;
+      this.sort(graph);
     }
-    if (this.tmpHaptic != null) {
-      this.draggingHaptic.values.intensity = y;
-      this.draggingHaptic.values.sharpness = y;
-    } else {
-      this.draggingHaptic.values[graph] = y;
-    }
+    this.draggingPoint.value = y;
   }
 
   onUp() {
-    return;
     this.hasUpdate = false;
-    this.draggingHaptic = null;
+    this.draggingPoint = null;
+  }
 
-    if (this.tmpHaptic == null) { return; }
-    this.hasUpdate = true;
-    if (Math.abs(this.tmpHaptic.duration) < 0.1) {
-      let haptic = new TransientHaptic(this.tmpHaptic.time, this.tmpHaptic.values.intensity, this.tmpHaptic.values.sharpness);
-      this.haptics.transient.push(haptic);
-    } else {
-      this.haptics.continuous.push(this.tmpHaptic);
-    }
-    this.tmpHaptic = null;
+  sort(graph) {
+    this.controlPoints[graph].sort((l, r) => {
+      return l.time < r.time ? 1 : -1;
+    });
   }
 
   targetGraph(canvas_x, canvas_y) {

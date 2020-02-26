@@ -94,6 +94,16 @@ function draw() {
     context.lineTo(line.end.x, line.end.y);
     context.stroke();
   }
+
+  for (let stridPoints of canvasViewModel.drawStrideLines) {
+    context.beginPath();
+    context.moveTo(stridPoints[0].x, stridPoints[0].y);
+    for(var i = 0; i < stridPoints.length; i++) {
+      context.lineTo(stridPoints[i].x, stridPoints[i].y);
+    }
+    context.stroke();
+  }
+
   for (let circle of canvasViewModel.drawCircles) {
     context.strokeStyle="black"
     context.fillStyle="white";

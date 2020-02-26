@@ -16,10 +16,15 @@ export class CanvasViewModel {
 
     this.drawRects = [];
     this.drawLines = [];
+    this.drawStrideLines = [];
     this.drawCircles = [];
 
     this.shouldDraw = false;
     this.enabeleDeleteMode = false;
+
+    if(this.eventParametersGraph.hasUpdate || this.curveParametersGraph.hasUpdate) {
+      this.draw();
+    }
   }
 
   toggledDleteMode() {
@@ -30,33 +35,24 @@ export class CanvasViewModel {
 
   onDown(x, y) {
     this.eventParametersGraph.onDown(x, y);
-    if(this.eventParametersGraph.hasUpdate) {
-      this.draw();
-    }
     this.curveParametersGraph.onDown(x, y);
-    if(this.curveParametersGraph.hasUpdate) {
+    if(this.eventParametersGraph.hasUpdate || this.curveParametersGraph.hasUpdate) {
       this.draw();
     }
   }
 
   onMove(x, y) {
     this.eventParametersGraph.onMove(x, y);
-    if(this.eventParametersGraph.hasUpdate) {
-      this.draw();
-    }
     this.curveParametersGraph.onMove(x, y);
-    if(this.curveParametersGraph.hasUpdate) {
+    if(this.eventParametersGraph.hasUpdate || this.curveParametersGraph.hasUpdate) {
       this.draw();
     }
   }
 
   onUp() {
     this.eventParametersGraph.onUp();
-    if(this.eventParametersGraph.hasUpdate) {
-      this.draw();
-    }
     this.curveParametersGraph.onUp();
-    if(this.curveParametersGraph.hasUpdate) {
+    if(this.eventParametersGraph.hasUpdate || this.curveParametersGraph.hasUpdate) {
       this.draw();
     }
   }
@@ -76,6 +72,7 @@ export class CanvasViewModel {
     this.drawRects = [];
     this.drawLines = [];
     this.drawCircles = [];
+    this.drawStrideLines = [];
 
     let haptics = this.eventParametersGraph.haptics.continuous;
     if(this.eventParametersGraph.tmpHaptic != null) {
@@ -106,11 +103,14 @@ export class CanvasViewModel {
     }
 
     for (let [key, config] of Object.entries(this.curveParametersGraph.graphConfigs)) {
+      let stridePoints = []
       for(let point of this.curveParametersGraph.controlPoints[key]) {
         let x = point.time * config.pxPerSec + config.origin.x;
         let y = config.origin.y + config.size.y - point.value * config.pxPerValue;
-        this.drawCircles.push(new Circle(new Vector2(x, y), 7));
+        this.drawCircles.push(new Circle(new Vector2(x, y), 10));
+        stridePoints.push(new Vector2(x, y));
       }
+      this.drawStrideLines.push(stridePoints);
     }
 
     this.shouldDraw = true;
