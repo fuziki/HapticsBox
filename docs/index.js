@@ -34,6 +34,7 @@ function init() {
     document.getElementById('closeButton').addEventListener('click', closeWs, false);
     document.getElementById('sendButton').addEventListener('click', sendWs, false);
     document.getElementById('modeButton').addEventListener('click', toggledDleteMode, false);
+    document.getElementById('readButton').addEventListener('click', read, false);
 
     draw();
 }
@@ -156,4 +157,8 @@ function sendWs() {
 function toggledDleteMode() {
   canvasViewModel.toggledDleteMode();
   document.getElementById('modeButton').value = canvasViewModel.enabeleDeleteMode ? "delete mode: on" : "delete mode: off";
+}
+
+function read() {
+  console.log("read text area");
 }
