@@ -65,6 +65,9 @@ export class CanvasViewModel {
     for (let haptic of this.eventParametersGraph.haptics.transient) {
       params.push(haptic.json());
     }
+    for (let json of this.curveParametersGraph.jsons()) {
+      params.push(json);
+    }
     return { Pattern: params };
   }
 
@@ -107,7 +110,7 @@ export class CanvasViewModel {
       for(let point of this.curveParametersGraph.controlPoints[key]) {
         let x = point.time * config.pxPerSec + config.origin.x;
         let y = config.origin.y + config.size.y - point.value * config.pxPerValue;
-        this.drawCircles.push(new Circle(new Vector2(x, y), 10));
+        this.drawCircles.push(new Circle(new Vector2(x, y), 7));
         stridePoints.push(new Vector2(x, y));
       }
       this.drawStrideLines.push(stridePoints);
