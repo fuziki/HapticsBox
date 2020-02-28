@@ -6,12 +6,24 @@ export class CanvasViewModel {
   constructor(canvas) {
     this.canvas = canvas;
 
-    const intensityGraphConfigs = new GraphConfigs(new Vector2(0, 0), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
-    const sharpnessGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
+    this.maxSec = 1;
+    this.padding_x = 25;
+    this.padding_y = 25;
+    this.graph_space_height = 20;
+    this.graph_width = canvas.width - this.padding_x * 2;
+    this.pxPerSec = this.graph_width / this.maxSec;
+    this.graph_height = (canvas.height - this.padding_y * 2 - this.graph_space_height * 3) / 4;
+
+    let y = this.padding_y;
+    const intensityGraphConfigs = new GraphConfigs(new Vector2(this.padding_x, y), new Vector2(this.graph_width, this.graph_height), this.pxPerSec, this.graph_height);
+    y += (this.graph_height + this.graph_space_height);
+    const sharpnessGraphConfigs = new GraphConfigs(new Vector2(this.padding_x, y), new Vector2(this.graph_width, this.graph_height), this.pxPerSec, this.graph_height);
     this.eventParametersGraph = new EventParametersGraph(intensityGraphConfigs, sharpnessGraphConfigs);
 
-    const intensityCurveGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4 * 2), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
-    const sharpnessCurveGraphConfigs = new GraphConfigs(new Vector2(0, canvas.height / 4 * 3), new Vector2(canvas.width, canvas.height / 4), 200, canvas.height / 4);
+    y += (this.graph_height + this.graph_space_height);
+    const intensityCurveGraphConfigs = new GraphConfigs(new Vector2(this.padding_x, y), new Vector2(this.graph_width, this.graph_height), this.pxPerSec, this.graph_height);
+    y += (this.graph_height + this.graph_space_height);
+    const sharpnessCurveGraphConfigs = new GraphConfigs(new Vector2(this.padding_x, y), new Vector2(this.graph_width, this.graph_height), this.pxPerSec, this.graph_height);
     this.curveParametersGraph = new CurveParametersGraph(intensityCurveGraphConfigs, sharpnessCurveGraphConfigs);
 
     this.drawRects = [];
@@ -69,6 +81,20 @@ export class CanvasViewModel {
       params.push(json);
     }
     return { Pattern: params };
+  }
+
+  readJson(json) {
+    this.eventParametersGraph.readJson(json);
+    this.curveParametersGraph.readJson(json);
+    this.draw();
+  }
+
+  updateMaxSec(maxSec) {
+    this.maxSec = maxSec;
+    this.pxPerSec = this.graph_width / this.maxSec;
+    this.eventParametersGraph.updatePxPerSec(this.pxPerSec, this.pxPerSec);
+    this.curveParametersGraph.updatePxPerSec(this.pxPerSec, this.pxPerSec);
+    this.draw();
   }
 
   draw() {

@@ -158,6 +158,33 @@ export class EventParametersGraph {
     this.tmpHaptic = null;
   }
 
+  readJson(json) {
+    this.haptics = { continuous: [], transient: [] };
+    for(let pattern of json.Pattern) {
+      let event = pattern.Event;
+      if (event == null) { continue; }
+      let intensity = 0;
+      let sharpness = 0;
+      for (let param of event.EventParameters) {
+        if (param.ParameterID == "HapticIntensity") {
+          intensity = param.ParameterValue;
+        } else if (param.ParameterID == "HapticSharpness") {
+          sharpness = param.ParameterValue;
+        }
+      }
+      if (event.EventType == "HapticContinuous") {
+        this.haptics.continuous.push(new ContinuousHaptic(event.Time, event.EventDuration, intensity, sharpness));
+      } else {
+        this.haptics.continuous.push(new TransientHaptic(event.Time, intensity, sharpness));
+      }
+    }
+  }
+
+  updatePxPerSec(intensityPxPerSec, sharpnessPxPerSec) {
+    this.graphConfigs.intensity.pxPerSec = intensityPxPerSec;
+    this.graphConfigs.sharpness.pxPerSec = sharpnessPxPerSec;
+  }
+
   targetGraph(canvas_x, canvas_y) {
     for (let [key, config] of Object.entries(this.graphConfigs)) {
       if (config.origin.x < canvas_x && 

@@ -22,10 +22,10 @@ export class CurveParametersGraph {
   constructor(intensityGraphConfigs, sharpnessGraphConfigs) {
     this.graphConfigs = { intensity: intensityGraphConfigs, sharpness: sharpnessGraphConfigs, };
     this.controlPoints = { intensity: [], sharpness: [] };
-    this.controlPoints.intensity.push(new ControlPoint(0, 1, true));
-    this.controlPoints.intensity.push(new ControlPoint(4, 1, true));
-    this.controlPoints.sharpness.push(new ControlPoint(0, 1, true));
-    this.controlPoints.sharpness.push(new ControlPoint(4, 1, true));
+    // this.controlPoints.intensity.push(new ControlPoint(0, 1, true));
+    // this.controlPoints.intensity.push(new ControlPoint(intensityGraphConfigs.size.x / intensityGraphConfigs.pxPerSec, 1, true));
+    // this.controlPoints.sharpness.push(new ControlPoint(0, 1, true));
+    // this.controlPoints.sharpness.push(new ControlPoint(sharpnessGraphConfigs.size.x / sharpnessGraphConfigs.pxPerSec, 1, true));
 
     this.draggingPoint = null;
     this.hasUpdate = true;
@@ -103,9 +103,31 @@ export class CurveParametersGraph {
     this.controlPoints.sharpness.forEach(e => {
       spoints.push(e.json());
     })
-    let icurve = { ParameterID: "HapticIntensityControl", Time: 0.0, ParameterCurveControlPoints: ipoints }
-    let scurve = { ParameterID: "HapticSharpnessControl", Time: 0.0, ParameterCurveControlPoints: spoints }
-    return [{ ParameterCurve: icurve }, { ParameterCurve: scurve }];
+    let out = [];
+    if (ipoints.length > 1) {
+      out.push({ ParameterCurve: { ParameterID: "HapticIntensityControl", Time: 0.0, ParameterCurveControlPoints: ipoints } });
+    }
+    if (spoints.length > 1) {
+      out.push({ ParameterCurve: { ParameterID: "HapticSharpnessControl", Time: 0.0, ParameterCurveControlPoints: spoints } });
+    }
+    return out;
+  }
+
+  readJson(json) {
+    this.controlPoints = { intensity: [], sharpness: [] };
+    for(let pattern of json.Pattern) {
+      let curve = pattern.ParameterCurve;
+      if (curve == null) { continue; }
+      let graph = curve.ParameterID == "HapticIntensityControl" ? "intensity" : "sharpness";
+      curve.ParameterCurveControlPoints.forEach(e => {
+        this.controlPoints[graph].push(new ControlPoint(e.Time, e.ParameterValue));
+      })
+    }
+  }
+
+  updatePxPerSec(intensityPxPerSec, sharpnessPxPerSec) {
+    this.graphConfigs.intensity.pxPerSec = intensityPxPerSec;
+    this.graphConfigs.sharpness.pxPerSec = sharpnessPxPerSec;
   }
 
   sort(graph) {
