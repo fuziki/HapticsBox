@@ -9,13 +9,19 @@
   <body>
     <canvas id="canvas" width="800" height="600"></canvas>
     <br>
+    <input type="button" id="modeButton" value="delete mode: off">
+    <span>max time</span>
+    <input type="range" min="1" max="3" value="1" step="0.1" id="rangeSlider">
+    <output id="maxSec">1.00sec</output>
+    <br>
     <input type="text" id="urlInput" name="url" size="40" value='ws://192.168.11.9:8080/haptic'>
     <input type="button" id="connectButton" value="connect">
     <input type="button" id="closeButton" value="close">
     <input type="button" id="sendButton" value="send">
-    <input type="button" id="modeButton" value="delete mode: off">
+    use "shift+s" to send the pattern.
+    <br>
     <input type="button" id="readButton" value="read">
-    use "shift+s" to send the pattern.<br>
+    <br>
     <textarea id="textarea" rows="40" style="width:100%">   
     </textarea>
   </body>

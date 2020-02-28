@@ -14,11 +14,15 @@ var canvasViewModel
 var textarea
 var urlInput
 var ws
+var slider
+var maxSec
 
 function init() {
     canvas = document.getElementById('canvas');
     textarea = document.getElementById('textarea');
     urlInput = document.getElementById('urlInput');
+    slider = document.getElementById('rangeSlider');
+    maxSec = document.getElementById('maxSec');
     if ( ! canvas || ! canvas.getContext ) {
         return false;
     }
@@ -35,6 +39,7 @@ function init() {
     document.getElementById('sendButton').addEventListener('click', sendWs, false);
     document.getElementById('modeButton').addEventListener('click', toggledDleteMode, false);
     document.getElementById('readButton').addEventListener('click', read, false);
+    slider.addEventListener('input', sliderChane, false);;
 
     draw();
 }
@@ -73,11 +78,6 @@ function onUp(e) {
 function draw() {
   context.strokeStyle="black"
   context.fillStyle="lightgray";
-  let intensityEventBaseLine = canvas.height / 4;
-  let sharpnessEventBaseLine = canvas.height / 4 * 2;
-  let intensityCurveBaseLine = canvas.height / 4 * 3;
-  let sharpnessCurveBaseLine = canvas.height / 4 * 4;
-  let baseLines = [intensityEventBaseLine, sharpnessEventBaseLine, intensityCurveBaseLine, sharpnessCurveBaseLine];
 
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -98,6 +98,7 @@ function draw() {
 
   for (let stridPoints of canvasViewModel.drawStrideLines) {
     context.beginPath();
+    if (stridPoints == 0) { continue; }
     context.moveTo(stridPoints[0].x, stridPoints[0].y);
     for(var i = 0; i < stridPoints.length; i++) {
       context.lineTo(stridPoints[i].x, stridPoints[i].y);
@@ -117,22 +118,27 @@ function draw() {
   context.font = "20px"
   context.fillStyle="black";
 
+  let l1 = canvasViewModel.padding_y + canvasViewModel.graph_height;
+  let l2 = l1 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
+  let l3 = l2 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
+  let l4 = l3 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
+  let baseLines = [l1, l2, l3, l4];
   for (let line of baseLines) {
     context.beginPath();
     context.moveTo(0, line);
     context.lineTo(canvas.width, line);
     context.stroke();
-    context.fillText("0.0sec", 0, line - 3);
-    context.fillText("1.0sec", canvas.width / 4 - 20, line - 3);
-    context.fillText("2.0sec", canvas.width / 2 - 20, line - 3);
-    context.fillText("3.0sec", canvas.width * 3 / 4 - 20, line - 3);
-    context.fillText("4.0sec", canvas.width - 35, line - 3);
+    context.fillText((canvasViewModel.maxSec / 4 * 0).toFixed(1) + "sec", 0, line - 3);
+    context.fillText((canvasViewModel.maxSec / 4 * 1).toFixed(1) + "sec", canvas.width / 4 - 20, line - 3);
+    context.fillText((canvasViewModel.maxSec / 4 * 2).toFixed(1) + "sec", canvas.width / 2 - 20, line - 3);
+    context.fillText((canvasViewModel.maxSec / 4 * 3).toFixed(1) + "sec", canvas.width * 3 / 4 - 20, line - 3);
+    context.fillText((canvasViewModel.maxSec / 4 * 4).toFixed(1) + "sec", canvas.width - 35, line - 3);
   }
 
-  context.fillText("event intensity", 5, intensityEventBaseLine - canvas.height / 4 + 15);
-  context.fillText("event sharpness", 5, sharpnessEventBaseLine - canvas.height / 4 + 15);
-  context.fillText("curve intensity", 5, intensityCurveBaseLine - canvas.height / 4 + 15);
-  context.fillText("curve sharpness", 5, sharpnessCurveBaseLine - canvas.height / 4 + 15);
+  context.fillText("event intensity", 5, l1 - canvasViewModel.graph_height + 15);
+  context.fillText("event sharpness", 5, l2 - canvasViewModel.graph_height + 15);
+  context.fillText("curve intensity", 5, l3 - canvasViewModel.graph_height + 15);
+  context.fillText("curve sharpness", 5, l4 - canvasViewModel.graph_height + 15);
 
   textarea.value = JSON.stringify(canvasViewModel.json());
 }
@@ -161,4 +167,12 @@ function toggledDleteMode() {
 
 function read() {
   console.log("read text area");
+  canvasViewModel.readJson(JSON.parse(textarea.value));
+  draw();
+}
+
+function sliderChane() {
+  maxSec.value = (slider.value * slider.value).toFixed(2) + "sec"
+  canvasViewModel.updateMaxSec(slider.value * slider.value);
+  draw();
 }
