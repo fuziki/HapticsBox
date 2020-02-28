@@ -94,9 +94,23 @@ export class CurveParametersGraph {
     this.draggingPoint = null;
   }
 
+  jsons() {
+    let ipoints = []
+    this.controlPoints.intensity.forEach(e => {
+      ipoints.push(e.json());
+    })
+    let spoints = []
+    this.controlPoints.sharpness.forEach(e => {
+      spoints.push(e.json());
+    })
+    let icurve = { ParameterID: "HapticIntensityControl", Time: 0.0, ParameterCurveControlPoints: ipoints }
+    let scurve = { ParameterID: "HapticSharpnessControl", Time: 0.0, ParameterCurveControlPoints: spoints }
+    return [{ ParameterCurve: icurve }, { ParameterCurve: scurve }];
+  }
+
   sort(graph) {
     this.controlPoints[graph].sort((l, r) => {
-      return l.time < r.time ? 1 : -1;
+      return l.time > r.time ? 1 : -1;
     });
   }
 
