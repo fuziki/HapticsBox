@@ -82,6 +82,19 @@ function draw() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, canvas.width, canvas.height);
 
+  let l1 = canvasViewModel.padding_y;
+  let l2 = l1 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
+  let l3 = l2 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
+  let l4 = l3 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
+
+  context.strokeStyle="white"
+  context.fillStyle="clear";
+  let model = canvasViewModel;
+  context.strokeRect(model.padding_x, l1, model.graph_width, model.graph_height);
+  context.strokeRect(model.padding_x, l2, model.graph_width, model.graph_height);
+  context.strokeRect(model.padding_x, l3, model.graph_width, model.graph_height);
+  context.strokeRect(model.padding_x, l4, model.graph_width, model.graph_height);
+
   for (let rect of canvasViewModel.drawRects) {
     context.strokeStyle="black"
     context.fillStyle="clear";
@@ -97,6 +110,7 @@ function draw() {
   }
 
   for (let stridPoints of canvasViewModel.drawStrideLines) {
+    context.strokeStyle="black"
     context.beginPath();
     if (stridPoints == 0) { continue; }
     context.moveTo(stridPoints[0].x, stridPoints[0].y);
@@ -117,28 +131,25 @@ function draw() {
 
   context.font = "20px"
   context.fillStyle="black";
+  context.strokeStyle="black"
 
-  let l1 = canvasViewModel.padding_y + canvasViewModel.graph_height;
-  let l2 = l1 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
-  let l3 = l2 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
-  let l4 = l3 + (canvasViewModel.graph_height + canvasViewModel.graph_space_height);
-  let baseLines = [l1, l2, l3, l4];
+  let baseLines = [l1 + canvasViewModel.graph_height, l2 + canvasViewModel.graph_height, l3 + canvasViewModel.graph_height, l4 + canvasViewModel.graph_height];
   for (let line of baseLines) {
     context.beginPath();
     context.moveTo(0, line);
     context.lineTo(canvas.width, line);
     context.stroke();
-    context.fillText((canvasViewModel.maxSec / 4 * 0).toFixed(1) + "sec", 0, line - 3);
+    context.fillText((canvasViewModel.maxSec / 4 * 0).toFixed(1) + "sec", 15, line - 3);
     context.fillText((canvasViewModel.maxSec / 4 * 1).toFixed(1) + "sec", canvas.width / 4 - 20, line - 3);
     context.fillText((canvasViewModel.maxSec / 4 * 2).toFixed(1) + "sec", canvas.width / 2 - 20, line - 3);
     context.fillText((canvasViewModel.maxSec / 4 * 3).toFixed(1) + "sec", canvas.width * 3 / 4 - 20, line - 3);
     context.fillText((canvasViewModel.maxSec / 4 * 4).toFixed(1) + "sec", canvas.width - 35, line - 3);
   }
 
-  context.fillText("event intensity", 5, l1 - canvasViewModel.graph_height + 15);
-  context.fillText("event sharpness", 5, l2 - canvasViewModel.graph_height + 15);
-  context.fillText("curve intensity", 5, l3 - canvasViewModel.graph_height + 15);
-  context.fillText("curve sharpness", 5, l4 - canvasViewModel.graph_height + 15);
+  context.fillText("event intensity", 5, l1 + 15);
+  context.fillText("event sharpness", 5, l2 + 15);
+  context.fillText("curve intensity", 5, l3 + 15);
+  context.fillText("curve sharpness", 5, l4 + 15);
 
   textarea.value = JSON.stringify(canvasViewModel.json());
 }
