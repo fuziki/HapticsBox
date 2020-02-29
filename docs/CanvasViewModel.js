@@ -7,9 +7,9 @@ export class CanvasViewModel {
     this.canvas = canvas;
 
     this.maxSec = 1;
-    this.padding_x = 25;
-    this.padding_y = 25;
-    this.graph_space_height = 20;
+    this.padding_x = 35;
+    this.padding_y = 35;
+    this.graph_space_height = 60;
     this.graph_width = canvas.width - this.padding_x * 2;
     this.pxPerSec = this.graph_width / this.maxSec;
     this.graph_height = (canvas.height - this.padding_y * 2 - this.graph_space_height * 3) / 4;

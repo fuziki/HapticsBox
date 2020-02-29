@@ -136,20 +136,24 @@ function draw() {
   let baseLines = [l1 + canvasViewModel.graph_height, l2 + canvasViewModel.graph_height, l3 + canvasViewModel.graph_height, l4 + canvasViewModel.graph_height];
   for (let line of baseLines) {
     context.beginPath();
-    context.moveTo(0, line);
-    context.lineTo(canvas.width, line);
+    context.moveTo(20, line);
+    context.lineTo(canvas.width - 10, line);
     context.stroke();
-    context.fillText((canvasViewModel.maxSec / 4 * 0).toFixed(1) + "sec", 15, line - 3);
-    context.fillText((canvasViewModel.maxSec / 4 * 1).toFixed(1) + "sec", canvas.width / 4 - 20, line - 3);
-    context.fillText((canvasViewModel.maxSec / 4 * 2).toFixed(1) + "sec", canvas.width / 2 - 20, line - 3);
-    context.fillText((canvasViewModel.maxSec / 4 * 3).toFixed(1) + "sec", canvas.width * 3 / 4 - 20, line - 3);
-    context.fillText((canvasViewModel.maxSec / 4 * 4).toFixed(1) + "sec", canvas.width - 35, line - 3);
+    let time_label = 10;
+    context.fillText("0", 12, line + 2);
+    context.fillText("1", 12, line - canvasViewModel.graph_height + 2);
+    context.fillText((canvasViewModel.maxSec / 4 * 0).toFixed(1) + "sec", 25, line + time_label);
+    context.fillText((canvasViewModel.maxSec / 4 * 1).toFixed(1) + "sec", canvas.width / 4 - 20, line + time_label);
+    context.fillText((canvasViewModel.maxSec / 4 * 2).toFixed(1) + "sec", canvas.width / 2 - 20, line + time_label);
+    context.fillText((canvasViewModel.maxSec / 4 * 3).toFixed(1) + "sec", canvas.width * 3 / 4 - 20, line + time_label);
+    context.fillText((canvasViewModel.maxSec / 4 * 4).toFixed(1) + "sec", canvas.width - 45, line + time_label);
   }
 
-  context.fillText("event intensity", 5, l1 + 15);
-  context.fillText("event sharpness", 5, l2 + 15);
-  context.fillText("curve intensity", 5, l3 + 15);
-  context.fillText("curve sharpness", 5, l4 + 15);
+  let label_space = -15;
+  context.fillText("event intensity", 15, l1 + label_space);
+  context.fillText("event sharpness", 15, l2 + label_space);
+  context.fillText("curve intensity", 15, l3 + label_space);
+  context.fillText("curve sharpness", 15, l4 + label_space);
 
   textarea.value = JSON.stringify(canvasViewModel.json());
 }
